@@ -1,6 +1,6 @@
 
-package com.management.model;
-
+package com.model;
+// This class holds the data
 public class Book {
     private int bookId;
     private String bookTitle;
