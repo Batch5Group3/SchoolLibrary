@@ -146,9 +146,9 @@ public class Function extends DbConnection {
     }
     
     // Search Book
-    public void searchBooks(){
+    public void searchBooks() throws SQLException{
         Scanner sc = new Scanner(System.in);
-        System.out.println("Search book/s: ");
+        System.out.print("Search book/s title: ");
         String bookTitle = sc.nextLine();
         String query = "SELECT * FROM tbl_libbook where book_title like ?";
         
@@ -158,7 +158,22 @@ public class Function extends DbConnection {
             prepare.setString(1, "%" +  bookTitle + "%");
             
             result = prepare.executeQuery();
+            System.out.println("ID\tTITLE\t\t\t\t\tAUTHOR\t\t\t\tPUBLICATION DATE\t\tBOOK TYPE");
+            while (result.next()){
+                
+                int id = result.getInt("book_id");
+                String title = result.getString("book_title");
+                String author = result.getString("book_author");
+                int pubDate = result.getInt("book_publication_date");
+                String type = result.getString("book_type");
+              
+              System.out.println(id + "\t" + title + "\t\t\t" + author + "\t\t\t\t"
+              + pubDate + "\t\t\t" + type);
+            }
         } catch (Exception e) {
+            System.out.println(e);
+        } finally{
+            connect.close();
         }
     }
    
