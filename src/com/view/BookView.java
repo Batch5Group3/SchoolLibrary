@@ -45,7 +45,7 @@ public class BookView {
                     System.out.println("Exiting the app...");
                     break;
                 default:
-                    System.out.println("Invalid option");
+                    showMessage("Invalid option...");
             }
         }
     }
