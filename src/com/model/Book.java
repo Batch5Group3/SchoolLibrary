@@ -2,6 +2,7 @@
 package com.model;
 // This class holds the data
 public class Book {
+    // These fields represents the table columns
     private int bookId;
     private String bookTitle;
     private String bookAuthor;

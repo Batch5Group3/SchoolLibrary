@@ -17,10 +17,12 @@ public class BookController {
         this.bookService = new BookService();
     }
     
+    // Read
     public List<Book> showAllBooks() {
         return bookService.getAll();
     }
     
+    // Create
     public void addBook(Book book) {
         bookService.add(book);
     }
