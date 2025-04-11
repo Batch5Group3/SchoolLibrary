@@ -10,5 +10,5 @@ public interface CrudService<T> {
     void add(T item);
     List<T> getAll();
     T getById(int id);
-    void deleteBook(int id);
+    void deleteItem(int id);
 }

@@ -29,7 +29,7 @@ public class AccountService implements CrudService<Account> {
     }
 
     @Override
-    public void deleteBook(int id) {
+    public void deleteItem(int id) {
         accounts.removeIf(account -> account.getUsrId() == id);
     }
     

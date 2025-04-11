@@ -74,10 +74,12 @@ public class BookView {
     }
     
     public void displayBook(Book book) {
+        System.out.println("==== Book/s available ====");
         System.out.println("Title: " + book.getBookTitle());
         System.out.println("Author: " + book.getBookAuthor());
         System.out.println("Type: " + book.getBookType());
         System.out.println("publishing date: " + book.getBookPublicationDate());
+        System.out.println();
     }
     
     public void showMessage(String message) {
