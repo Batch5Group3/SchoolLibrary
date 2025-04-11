@@ -1,5 +1,5 @@
 
-package com.app.schoollibrary;
+package com.app.controller;
 
 import com.app.util.DbConnection;
 import java.util.Scanner;

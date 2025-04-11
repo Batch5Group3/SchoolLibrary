@@ -1,5 +1,5 @@
 
-package com.app.schoollibrary;
+package com.app.controller;
 
 import com.app.util.DbConnection;
 import java.sql.SQLException;
@@ -105,7 +105,10 @@ public class Book extends DbConnection {
     
     //Delete API
     //Soft Delete / Archive
-    public void archiveBooks(int bookId) throws SQLException{
+    public void archiveBooks() throws SQLException{
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter book ID you want to archive: ");
+        int bookId = sc.nextInt();
         String query = "UPDATE tbl_libbook SET archived = 1 where book_id = ?";
         
         try {
@@ -123,7 +126,10 @@ public class Book extends DbConnection {
     }
     
     //Restore Archived Books
-    public void restoreBooks(int bookId) throws SQLException{
+    public void restoreBooks() throws SQLException{
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter book ID you want to restore: ");
+        int bookId = sc.nextInt();
         String query = "UPDATE tbl_libbook SET archived = 0 where book_id = ?";
         
         try {
@@ -227,10 +233,10 @@ public class Book extends DbConnection {
 //                      updateBooks();
                         break;
                     case 5: 
-//                        archiveBooks();
+                        archiveBooks();
                         break;
                     case 6:
-//                        restoreBooks();
+                        restoreBooks();
                         break;
                     case 7: 
                         deleteBooks();
