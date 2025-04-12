@@ -32,5 +32,10 @@ public class AccountService implements CrudService<Account> {
     public void deleteItem(int id) {
         accounts.removeIf(account -> account.getUsrId() == id);
     }
+
+    @Override
+    public void updateItem(Account id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

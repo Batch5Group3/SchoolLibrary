@@ -10,6 +10,6 @@ public interface CrudService<T> {
     void add(T item); // Create
     List<T> getAll(); // Read
     T getById(int id); // Read
-    // void updateItem(int id); // Update
+    void updateItem(T id); // Update
     void deleteItem(int id); // Delete
 }

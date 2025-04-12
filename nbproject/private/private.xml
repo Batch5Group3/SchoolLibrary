@@ -6,10 +6,8 @@
             <file>file:/D:/Java/SchoolLibrary/src/com/model/Book.java</file>
             <file>file:/D:/Java/SchoolLibrary/src/com/app/Main.java</file>
             <file>file:/D:/Java/SchoolLibrary/src/com/services/CrudService.java</file>
-            <file>file:/D:/Java/SchoolLibrary/src/com/model/Account.java</file>
             <file>file:/D:/Java/SchoolLibrary/src/com/view/BookView.java</file>
             <file>file:/D:/Java/SchoolLibrary/src/com/app/util/DbConnection.java</file>
-            <file>file:/D:/Java/SchoolLibrary/src/com/services/AccountService.java</file>
             <file>file:/D:/Java/SchoolLibrary/src/com/services/BookService.java</file>
             <file>file:/D:/Java/SchoolLibrary/src/com/controller/BookController.java</file>
         </group>

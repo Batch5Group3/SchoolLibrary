@@ -26,4 +26,12 @@ public class BookController {
     public void addBook(Book book) {
         bookService.add(book);
     }
+    
+    public void updateBook(Book item) {
+        bookService.updateItem(item);
+    }
+    
+    public Book findBookById(int id) {
+        return bookService.getById(id);
+    }
 }
