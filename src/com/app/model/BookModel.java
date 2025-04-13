@@ -6,17 +6,19 @@ public class BookModel {
     private int id;
     private String title;
     private String author;
-    private String pubYear;
+    private int pubYear;
     private String type;
 
-    public BookModel(int id, String title, String author, String pubYear, String type) {
-        this.id = id;
+    public BookModel() {
+    }
+    
+    public BookModel(int bkId, String title, String author, int pubYear, String type) {
+        this.id = bkId;
         this.title = title;
         this.author = author;
         this.pubYear = pubYear;
         this.type = type;
     }
-
     
     public int getId() {
         return id;
@@ -42,11 +44,11 @@ public class BookModel {
         this.author = author;
     }
 
-    public String getPubYear() {
+    public int getPubYear() {
         return pubYear;
     }
 
-    public void setPubYear(String pubYear) {
+    public void setPubYear(int pubYear) {
         this.pubYear = pubYear;
     }
 

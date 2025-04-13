@@ -9,11 +9,14 @@ public class AccountModel {
     private String firstName;
     private String lastName;
     private String address;
-    private int contactNo;
+    private String contactNo;
     private boolean isAdmin;
 
-     public AccountModel(int usrId, String userName, String password, String firstName, String lastName, String address, int contactNo, boolean isAdmin) {
-        this.id = id;
+    public AccountModel() {
+    }
+
+     public AccountModel(int usrId, String userName, String password, String firstName, String lastName, String address, String contactNo, boolean isAdmin) {
+        this.id = usrId;
         this.userName = userName;
         this.password = password;
         this.firstName = firstName;
@@ -71,11 +74,11 @@ public class AccountModel {
         this.address = address;
     }
 
-    public int getcontactNo() {
+    public String getcontactNo() {
         return contactNo;
     }
 
-    public void setcontactNo(int contactNo) {
+    public void setcontactNo(String contactNo) {
         this.contactNo = contactNo;
     }
 
@@ -85,6 +88,11 @@ public class AccountModel {
 
     public void setIsAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
+    }
+
+    @Override
+    public String toString() {
+        return "AccountModel{" + "id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", contactNo=" + contactNo + ", isAdmin=" + isAdmin + '}';
     }
     
     

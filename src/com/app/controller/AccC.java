@@ -5,7 +5,7 @@ import com.app.util.DbConnection;
 import java.util.Scanner;
 
 
-public class UserAccount extends DbConnection {
+public class AccC extends DbConnection {
     
     //create User Account
     public void createUserAccount() {
@@ -20,8 +20,10 @@ public class UserAccount extends DbConnection {
         String address = sc.nextLine();
         System.out.print("Enter contact number: ");
         int phone = sc.nextInt();
+        sc.nextLine();
         System.out.println("User Type:\n\t[0]Student\n\t[1]Libraian\nEnter user type: ");
         int userType = sc.nextInt();
+        sc.nextLine();
         System.out.print("Enter username: ");
         String userName = sc.nextLine();
         System.out.print("Enter password: ");

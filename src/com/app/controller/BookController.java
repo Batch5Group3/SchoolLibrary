@@ -1,13 +1,14 @@
 
 package com.app.controller;
 
+import com.app.model.BookModel;
 import com.app.util.DbConnection;
 import java.sql.SQLException;
 import java.util.Scanner;
 
 
-public class Book extends DbConnection {
-    
+public class BookController extends DbConnection {
+    BookModel bookModel = new BookModel();
     // Read Operation/API
     public void displayBooks() throws SQLException{
         String query = "SELECT * FROM tbl_libbook";
@@ -20,14 +21,14 @@ public class Book extends DbConnection {
           
             System.out.println("ID\tTITLE\t\t\t\t\tAUTHOR\t\t\t\tYEAR PUBLISHED\t\tBOOK TYPE");
           while(result.next()){
-              int id = result.getInt("book_id");
-              String title = result.getString("book_title");
-              String author = result.getString("book_author");
-              int pubYear = result.getInt("book_year_published");
-              String type = result.getString("book_type");
+              bookModel.setId(result.getInt("book_id"));
+              bookModel.setTitle(result.getString("book_title"));
+              bookModel.setAuthor(result.getString("book_author"));
+              bookModel.setPubYear(result.getInt("book_year_published"));
+              bookModel.setType(result.getString("book_type"));
               
-              System.out.println(id + "\t" + title + "\t\t\t" + author + "\t\t\t\t"
-              + pubYear + "\t\t\t" + type);
+              System.out.println(bookModel.getId() + "\t" + bookModel.getTitle() + "\t\t\t" + bookModel.getAuthor() + "\t\t\t\t"
+              + bookModel.getPubYear() + "\t\t\t" + bookModel.getType());
           }
           
         } catch (Exception e) {
@@ -43,7 +44,7 @@ public class Book extends DbConnection {
         Scanner sc = new Scanner(System.in);
         System.out.println("---ADD BOOKS---\nFill up the following informations.");
         System.out.print("Book title: ");
-        String title = sc.nextLine();
+        bookModel.setTitle(sc.nextLine());
         System.out.println("Book author: ");
         String author = sc.nextLine();
         System.out.println("Book year published: ");
@@ -59,13 +60,13 @@ public class Book extends DbConnection {
             // execute query
             prepare = connect.prepareStatement(query);
             // set parameter = wildcards;
-            prepare.setString(1, title);
+            prepare.setString(1, bookModel.getTitle());
             prepare.setString(2, author);
             prepare.setInt(3, pubYear);
             prepare.setString(4, type);
             prepare.executeUpdate();
             
-            System.out.println( title + "book. Added successfully!");
+            System.out.println( bookModel.getTitle() + "book. Added successfully!");
 
             displayBooks();
             
@@ -116,7 +117,7 @@ public class Book extends DbConnection {
             prepare.setInt(1, bookId);
             prepare.executeUpdate();
             System.out.println("Book ID " + bookId + "Archived Successfully!");
-            displayBooks();
+//            displayBooks();
             
         } catch (Exception e) {
             System.out.println(e);
@@ -137,7 +138,7 @@ public class Book extends DbConnection {
             prepare.setInt(1, bookId);
             prepare.executeUpdate();
             System.out.println("Book ID " + bookId + "Retrieved Successfully!");
-            displayBooks();
+//            displayBooks();
             
         } catch (Exception e) {
             System.out.println(e);
@@ -160,7 +161,7 @@ public class Book extends DbConnection {
             prepare.executeUpdate();
             
             System.out.println("Book ID " + bookId + " is successfully deleted!");
-            displayBooks();
+//            displayBooks();
             
         } catch (Exception e) {
             System.out.println(e);
@@ -221,7 +222,7 @@ public class Book extends DbConnection {
                 int dbChoice = sc.nextInt();
                 switch(dbChoice){
                     case 1:
-                        displayBooks();
+//                        displayBooks();
                         break;
                     case 2:
                         searchBooks();
