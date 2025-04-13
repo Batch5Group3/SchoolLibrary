@@ -74,11 +74,11 @@ public class AccountModel {
         this.address = address;
     }
 
-    public String getcontactNo() {
+    public String getContactNo() {
         return contactNo;
     }
 
-    public void setcontactNo(String contactNo) {
+    public void setContactNo(String contactNo) {
         this.contactNo = contactNo;
     }
 
