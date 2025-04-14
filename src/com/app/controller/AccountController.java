@@ -4,7 +4,9 @@ package com.app.controller;
 import com.app.model.AccountModel;
 import com.app.util.DbConnection;
 import com.app.view.AccountView;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Scanner;
 
 
 public class AccountController extends DbConnection implements CrudService<AccountModel> {
@@ -68,7 +70,29 @@ public class AccountController extends DbConnection implements CrudService<Accou
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws SQLException{
+        Scanner sc = new Scanner (System.in);
+        String query = "DELETE tbl_account WHERE user_id = ?";
+            
+        try {
+            System.out.println("Are you sure you want to delete User ID " + id + "?");
+            System.out.println("\t[Y] Yes\n\t[N] No");
+            System.out.print("Enter choice: ");
+            String choice = sc.nextLine();
+                connect();
+                prepare = connect.prepareStatement(query);
+                prepare.setInt(1, id);
+                prepare.executeUpdate();
+            if ("Y".equals(choice) || "y".equals(choice)) {
+                System.out.println("User ID " + id + " is successfully deleted!");
+            } else {
+                System.out.println("Failed to delete...");
+            }
+        } catch (Exception e) {
+            System.out.println("Failed to delete " + e);
+        } finally {
+        connect.close();
+    }
     }
 
     @Override

@@ -5,6 +5,7 @@ package com.app.view;
 import com.app.controller.AccountController;
 import com.app.model.AccountModel;
 import com.app.util.DbConnection;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 
@@ -129,5 +130,17 @@ public class AccountView extends DbConnection {
         accControl.update(id, fieldName, newInfo);
         }
     
+    public void deleteAccount() throws SQLException {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter User ID you want to delete: ");
+        int id = sc.nextInt();
+        sc.nextLine();
+        try {
+            accControl.delete(id);
+        } catch (Exception e) {
+            System.out.println("Failed to delete " + e);
+        }
+        sc.close();
     }
+}
    
