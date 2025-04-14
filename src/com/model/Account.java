@@ -2,34 +2,38 @@
 package com.model;
 
 public class Account {
-    private int usrId;
+    private int userId;
     private String userName;
-    private String passWord;
-    private String firstName;
-    private String lastName;
-    private String address;
-    private int contactNo;
-    private String userType;
-    
+    private String userPass;
+    private String userFirstname;
+    private String userLastname;
+    private String userAddress;
+    private String userContactNo;
+    private boolean userIsAdmin;
+
+    // Default constructor
     public Account() {}
 
-    public Account(int usrId, String userName, String passWord, String firstName, String lastName, String address, int contactNo, String userType) {
-        this.usrId = usrId;
+    // Parameterized constructor
+    public Account(int userId, String userName, String userPass, String userFirstname,
+                   String userLastname, String userAddress, String userContactNo, boolean userIsAdmin) {
+        this.userId = userId;
         this.userName = userName;
-        this.passWord = passWord;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.contactNo = contactNo;
-        this.userType = userType;
+        this.userPass = userPass;
+        this.userFirstname = userFirstname;
+        this.userLastname = userLastname;
+        this.userAddress = userAddress;
+        this.userContactNo = userContactNo;
+        this.userIsAdmin = userIsAdmin;
     }
 
-    public int getUsrId() {
-        return usrId;
+    // Getters and Setters
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUsrId(int usrId) {
-        this.usrId = usrId;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getUserName() {
@@ -40,52 +44,65 @@ public class Account {
         this.userName = userName;
     }
 
-    public String getPassWord() {
-        return passWord;
+    public String getUserPass() {
+        return userPass;
     }
 
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
+    public void setUserPass(String userPass) {
+        this.userPass = userPass;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getUserFirstname() {
+        return userFirstname;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setUserFirstname(String userFirstname) {
+        this.userFirstname = userFirstname;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getUserLastname() {
+        return userLastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setUserLastname(String userLastname) {
+        this.userLastname = userLastname;
     }
 
-    public String getAddress() {
-        return address;
+    public String getUserAddress() {
+        return userAddress;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setUserAddress(String userAddress) {
+        this.userAddress = userAddress;
     }
 
-    public int getContactNo() {
-        return contactNo;
+    public String getUserContactNo() {
+        return userContactNo;
     }
 
-    public void setContactNo(int contactNo) {
-        this.contactNo = contactNo;
+    public void setUserContactNo(String userContactNo) {
+        this.userContactNo = userContactNo;
     }
 
-    public String getUserType() {
-        return userType;
+    public boolean isUserIsAdmin() {
+        return userIsAdmin;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType;
+    public void setUserIsAdmin(boolean userIsAdmin) {
+        this.userIsAdmin = userIsAdmin;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", userPass='" + userPass + '\'' +
+                ", userFirstname='" + userFirstname + '\'' +
+                ", userLastname='" + userLastname + '\'' +
+                ", userAddress='" + userAddress + '\'' +
+                ", userContactNo='" + userContactNo + '\'' +
+                ", userIsAdmin=" + userIsAdmin +
+                '}';
+    }
 }

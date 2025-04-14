@@ -57,7 +57,7 @@ public class BookView {
                     break;
                 case 4:
                     show = false;
-                    System.out.println("Exiting the app...");
+                    System.out.println("Exiting the Book Menu...");
                     break;
                 default:
                     showMessage("Invalid option...");
