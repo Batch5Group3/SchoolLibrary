@@ -13,7 +13,7 @@ public class AccountController extends DbConnection implements CrudService<Accou
 
     
     @Override
-    public void add(AccountModel account) {
+    public void add(AccountModel account) throws SQLException {
         AccountView accView = new AccountView();
         String query = "INSERT INTO tbl_account (user_name, user_pass, user_firstname, user_lastname,"
                 + "user_address, user_contact_no, user_is_admin)"
@@ -38,10 +38,11 @@ public class AccountController extends DbConnection implements CrudService<Accou
                 prepare.executeUpdate();
                 System.out.println("Welcome " + account.getFirstName() + "! You successfully created your account.");
                 
-                connect.close();
             }
         } catch (Exception e) {
             System.out.println(e);
+        } finally {
+            connect.close();
         }
     }
 
@@ -72,7 +73,7 @@ public class AccountController extends DbConnection implements CrudService<Accou
     @Override
     public void delete(int id) throws SQLException{
         Scanner sc = new Scanner (System.in);
-        String query = "DELETE tbl_account WHERE user_id = ?";
+        String query = "DELETE FROM tbl_account WHERE user_id = ?";
             
         try {
             System.out.println("Are you sure you want to delete User ID " + id + "?");
@@ -82,11 +83,12 @@ public class AccountController extends DbConnection implements CrudService<Accou
                 connect();
                 prepare = connect.prepareStatement(query);
                 prepare.setInt(1, id);
+                
+            if ("Y".equalsIgnoreCase(choice)) {
                 prepare.executeUpdate();
-            if ("Y".equals(choice) || "y".equals(choice)) {
                 System.out.println("User ID " + id + " is successfully deleted!");
             } else {
-                System.out.println("Failed to delete...");
+                System.out.println("Delete canceled.");
             }
         } catch (Exception e) {
             System.out.println("Failed to delete " + e);

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface CrudService<S> {
     
-    public void add(S item);
+    public void add(S item) throws SQLException;
     public List<S> getAll();
     public S getByFirstName(String item);
     public void update(int id, String field, String newInfo);

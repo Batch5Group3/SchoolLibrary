@@ -13,35 +13,38 @@ public class AccountView extends DbConnection {
     AccountModel accModel = new AccountModel();
     AccountController accControl= new AccountController();
     
-    public void addAccount(){
+    public void addAccount() throws SQLException{
         Scanner sc = new Scanner(System.in);
         
         try {
         
-        System.out.println("Sign Up Account");
-        System.out.print("Enter first name: ");
+        System.out.println("\t\t\t+=========================================+");
+            System.out.println("\t\t\t|         🔐 CREATE YOUR NEW ACCOUNT      |");
+            System.out.println("\t\t\t+=========================================+");
+        System.out.print("\t\t\tEnter first name: ");
         accModel.setFirstName(sc.nextLine());
-        System.out.print("Enter last name: ");
+        System.out.print("\t\t\tEnter last name: ");
         accModel.setLastName(sc.nextLine());
-        System.out.print("Enter address: ");
+        System.out.print("\t\t\tEnter address: ");
         accModel.setAddress(sc.nextLine());
-        System.out.print("Enter contact number: ");
+        System.out.print("\t\t\tEnter contact number: ");
         accModel.setContactNo(sc.nextLine());
-        System.out.print("User Type:\n\t[0]Student\n\t[1]Libraian\nEnter user type: ");
+        System.out.print("\t\t\tUser Type:\n\t\t\t[0]Student\n\t\t\t[1]Libraian"
+                + "\n\t\t\tEnter user type: ");
         accModel.setIsAdmin(true);
         sc.nextLine();
-        System.out.print("Enter username: ");
+        System.out.print("\t\t\tEnter username: ");
         accModel.setUserName(sc.nextLine());
-        System.out.print("Enter password: ");
+        System.out.print("\t\t\tEnter password: ");
         accModel.setPass(sc.nextLine());
         
-        System.out.println(accModel);
-        
-        
         accControl.add(accModel);
-        connect.close();
+        
+        
         } catch (Exception e) {
             System.out.println("Failed " + e);
+        } finally {
+            connect.close();
         }
     }
     
@@ -135,6 +138,7 @@ public class AccountView extends DbConnection {
         System.out.print("Enter User ID you want to delete: ");
         int id = sc.nextInt();
         sc.nextLine();
+            
         try {
             accControl.delete(id);
         } catch (Exception e) {
