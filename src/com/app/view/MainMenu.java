@@ -17,11 +17,7 @@ public class MainMenu {
     }
     public void welcomeMessage() throws SQLException{
         Scanner scanner = new Scanner(System.in);
-        int choice;
-        
-        do {
-            
-
+        int choiceAcc;
            String welcome =
                 "\t\t\t__        __   _                            \n" +
                 "\t\t\t\\ \\      / /__| | ___ ___  _ __ ___   ___  \n" +
@@ -37,10 +33,10 @@ public class MainMenu {
             System.out.println("\t\t\t| [2] Sign Up for a New Account           |");
             System.out.println("\t\t\t| [3] Exit Application                    |");
             System.out.println("\t\t\t+-----------------------------------------+");
-            System.out.print("\t\t\t   Please enter your choice: ");
+            System.out.print(BLUE + "\t\t\t   Please enter your choice: " + RESET);
             
-            choice = scanner.nextInt();
-            switch(choice){
+            choiceAcc = scanner.nextInt();
+            switch(choiceAcc){
                 case 1:
                     accView.addAccount();
                     break;
@@ -49,26 +45,58 @@ public class MainMenu {
                     accView.addAccount();
                     break;
                 case 3:
+                    //exit
+                  break;
+                default:
+                  System.out.println("⚠ Invalid choice. Please enter a number from the menu.");
+                  break;
+            }
+            scanner.close();
+        } 
+        
+    public void logInMenu() throws SQLException{
+        Scanner scanner = new Scanner(System.in);
+        int chocieMenu; 
+        System.out.println("\t\t\t+=========================================+");
+        System.out.println("\t\t\t|              MAIN MENU                  |");
+        System.out.println("\t\t\t+=========================================+");
+        String menu = 
+            "\t\t\t   1. 📚 Access Books\n" +
+            "\t\t\t   2. 👤 Manage Account\n" +
+            "\t\t\t   3. 📖 View Borrowed Books\n" +
+            "\t\t\t   4. 🔁 Return Books\n" +
+            "\t\t\t   5. 🔒 Log Out\n" +
+            "\t\t\t   6. ❌ Exit\n" +
+            "\t\t\t   -----------------------------------\n";
+        System.out.print(BLUE + "\t\t\tPlease choose an option:\n" + RESET);
+            System.out.println(menu);
+            chocieMenu = scanner.nextInt();
+            switch (chocieMenu){
+                case 1:
+                    //book menu
+                    break;
+                case 2:
+                    AccountView accView = new AccountView();
+                    accView.accountMenu();
+                    break;
+                case 3:
+                    // borrower books
+                    break;
+                case 4:
+                    //return method
+                    break;
+                case 5:
+                    //log out / back to log in menu
+                    break;
+                case 6:
+                    //exit
+                    System.out.println("Thank for using School Library Management System! :)");
+                    break;
+                default: 
+                    System.out.println("⚠ Invalid choice. Please enter a number from the menu.");
+                    break;
                     
             }
-        } while (choice!= 0);
-        scanner.close();
-    }
-    
-    public void logInMenu(){
-        
-        
-        String menu = BLUE +
-            "   Please choose an option:\n" +
-            "   -----------------------------------\n" +
-            "   1. 📚 Access Books\n" +
-            "   2. 👤 Manage Account\n" +
-            "   3. 📖 View Borrowed Books\n" +
-            "   4. 🔁 Return Books\n" +
-            "   5. 🔒 Log Out\n" +
-            "   6. ❌ Exit\n" +
-            "   -----------------------------------\n" + RESET;
-            System.out.println(menu);
     }
     
     public void clearScreen() {

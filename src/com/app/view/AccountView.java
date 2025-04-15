@@ -124,7 +124,7 @@ public class AccountView extends DbConnection {
                 
                 break;
             default: 
-                System.out.println("Invalit Input");
+                System.out.println("⚠ Invalid choice. Please enter a number from the menu.");
                 return;
         }
         System.out.print("Enter new information: " );
@@ -145,6 +145,54 @@ public class AccountView extends DbConnection {
             System.out.println("Failed to delete " + e);
         }
         sc.close();
+    }
+    
+    public void accountMenu() throws SQLException {
+        MainMenu main = new MainMenu();
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("╔═══════════════════════════╗");
+        System.out.println("║           👥 ACCOUNT MANAGEMENT            ║");
+        System.out.println("╚═══════════════════════════╝");
+        System.out.println("  [1] 📜 List of Accounts");
+        System.out.println("  [2] ✏️  Update Account");
+        System.out.println("  [3] 🔍 Search Account");
+        System.out.println("  [4] 🗑️  Delete Account");
+        System.out.println("  [5] 🔙 Back to Main Menu");
+        System.out.println("  [6] 🔐 Log Out");
+        System.out.println("  [7] ❌ Exit Application");
+        System.out.println("════════════════════════════");
+        System.out.print("Please enter your choice: ");
+        int choice = sc.nextInt();
+        
+        switch(choice){
+            case 1:
+                //view accounts
+                break;
+            case 2:
+                updateAccount();
+                break;
+            case 3:
+                searchAccount();
+                break;
+            case 4:
+                deleteAccount();
+                break;
+            case 5:
+                main.logInMenu();
+                break;
+            case 6:
+                main.welcomeMessage();
+                break;
+            case 7:
+                //exit
+                break;
+            default:
+                System.out.println("⚠ Invalid choice. Please enter a number from the menu.");
+                break;
+                        
+        }
+
     }
 }
    
