@@ -61,8 +61,8 @@ public class AccountView {
 
     private void viewAllAccounts() {
         List<Account> accounts = accountController.showAllAccount();
+        System.out.println("==== Accounts ====");
         for (Account acc : accounts) {
-            System.out.println("==== Accounts ====");
             System.out.println("User Name: " + acc.getUserName());
             System.out.println("First Name: " + acc.getUserFirstname());
             System.out.println("Contact#: " + acc.getUserContactNo());
