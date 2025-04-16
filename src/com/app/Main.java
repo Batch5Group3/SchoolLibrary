@@ -3,9 +3,11 @@ package com.app;
 
 import com.controller.AccountController;
 import com.controller.BookController;
+import com.controller.TransactionController;
 import com.view.AccountView;
 import com.view.BookView;
 import com.view.LoginView;
+import com.view.TransactionView;
 import java.util.Scanner;
         
 public class Main {
@@ -19,11 +21,12 @@ public class Main {
         if(loginView.showLogin()){
             BookController bookController = new BookController();
             BookView bookView = new BookView(bookController);
-            //bookView.showMainMenu();
+            TransactionController transactionController = new TransactionController();
             
             AccountController accountController = new AccountController();
             AccountView accountView = new AccountView(accountController);
-            AppMenu appMenu = new AppMenu(bookView, accountView);
+            TransactionView transactionView = new TransactionView(transactionController);
+            AppMenu appMenu = new AppMenu(bookView, accountView, transactionView);
             appMenu.start();
         } else {
             System.out.print("Retry? Y/N : ");

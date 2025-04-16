@@ -23,7 +23,7 @@ public class AccountView {
             System.out.println("3. View Account By ID");
             System.out.println("4. Update Account");
             System.out.println("5. Delete Account");
-            System.out.println("6. Exit");
+            System.out.println("6. Back to Main Menu");
             System.out.print("Choose an option: ");
             choice = scanner.nextInt();
             scanner.nextLine(); // consume newline
