@@ -11,7 +11,6 @@ public class AccountController {
     private AccountService accountService = new AccountService();
     
     public AccountController() {
-        // initializes this.bookService with BookService objects
         this.accountService = new AccountService();
     }
     

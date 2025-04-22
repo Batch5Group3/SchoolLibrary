@@ -8,17 +8,21 @@ public class BookModel {
     private String author;
     private int pubYear;
     private String type;
+    private String status;
 
     public BookModel() {
     }
-    
-    public BookModel(int bkId, String title, String author, int pubYear, String type) {
-        this.id = bkId;
+
+    public BookModel(int id, String title, String author, int pubYear, String type, String status) {
+        this.id = id;
         this.title = title;
         this.author = author;
         this.pubYear = pubYear;
         this.type = type;
+        this.status = status;
     }
+    
+    
     
     public int getId() {
         return id;
@@ -58,6 +62,14 @@ public class BookModel {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
     
     

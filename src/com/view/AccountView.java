@@ -84,11 +84,11 @@ public class AccountView extends DbConnection {
             
             try {
             System.out.println();
-            System.out.println("\033[1;34m════════════════════════════════ ACCOUNT LIST ═════════════════════════════════════\033[0m");
-            System.out.println("══════════════════════════════════════════════════════════════════════════════");
+            System.out.println("\033[1;34m════════════════════════════════ ACCOUNT LIST ═══════════════════════════════════════\033[0m");
+            System.out.println("════════════════════════════════════════════════════════════════════════════════");
             System.out.printf("| %-5s | %-15s | %-15s | %-12s | %-12s | %-20s | %-15s | %-6s |\n",
                 "ID", "Username", "Password", "First Name", "Last Name", "Address", "Contact No", "Admin");
-            System.out.println("══════════════════════════════════════════════════════════════════════════════");
+            System.out.println("════════════════════════════════════════════════════════════════════════════════");
             for (AccountModel acc : accounts) {
                 System.out.printf("| %-5d | %-15s | %-15s | %-12s | %-12s | %-20s | %-15s | %-6s |\n",
                         acc.getId(),
@@ -100,7 +100,7 @@ public class AccountView extends DbConnection {
                         acc.getContactNo(),
                         acc.isAdmin() ? "Yes" : "No");
             }
-            System.out.println("══════════════════════════════════════════════════════════════════════════════");
+            System.out.println("═══════════════════════════════════════════════════════════════════════════════");
             waitForEnter(sc);
                 
         } catch (Exception e) {
@@ -147,6 +147,7 @@ public class AccountView extends DbConnection {
                  accModel.setUserName(username);
                 System.out.print("\t\t\t\tEnter password: ");
                 accModel.setPass(sc.nextLine());
+                
                 if (accModel.getFirstName().isEmpty() || accModel.getLastName().isEmpty() || accModel.getUserName().isEmpty() || accModel.getPass().isEmpty())  {
                     String errorMsg = "Fields cannot be empty. Please try again!";
                     System.out.println(errorMsg);
@@ -168,10 +169,10 @@ public class AccountView extends DbConnection {
         System.out.println("\n\n");
         System.out.print("\t\t\t\tEnter first name you want to search: ");
         String searchName = sc.nextLine().toLowerCase();
-        System.out.println("══════════════════════════════════════════════════════════════════════════════");
+        System.out.println("════════════════════════════════════════════════════════════════════════════════");
         System.out.printf("| %-5s | %-15s | %-15s | %-12s | %-12s | %-20s | %-15s | %-6s |\n",
         "ID", "Username", "Password", "First Name", "Last Name", "Address", "Contact No", "Admin");
-        System.out.println("══════════════════════════════════════════════════════════════════════════════");
+        System.out.println("════════════════════════════════════════════════════════════════════════════════");
         
         try {
             List<AccountModel> search = accountService.getByFirstName(searchName);

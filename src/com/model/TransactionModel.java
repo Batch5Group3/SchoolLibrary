@@ -1,15 +1,17 @@
 
 package com.model;
 	
+import java.sql.Date;
+
 public class TransactionModel {
     private int id;
     private int userId;
     private int bookId;
-    private int borrowDate;
-    private int returnDate;
+    private Date borrowDate;    
+    private Date returnDate; 
     private int fineAmount;
 
-    public TransactionModel(int id, int userId, int bookId, int borrowDate, int returnDate, int fineAmount) {
+    public TransactionModel(int id, int userId, int bookId, Date borrowDate, Date returnDate, int fineAmount) {
         this.id = id;
         this.userId = userId;
         this.bookId = bookId;
@@ -18,7 +20,9 @@ public class TransactionModel {
         this.fineAmount = fineAmount;
     }
 
-    
+    public TransactionModel() {
+    }
+
     public int getId() {
         return id;
     }
@@ -43,19 +47,19 @@ public class TransactionModel {
         this.bookId = bookId;
     }
 
-    public int getBorrowDate() {
+    public Date getBorrowDate() {
         return borrowDate;
     }
 
-    public void setBorrowDate(int borrowDate) {
+    public void setBorrowDate(Date borrowDate) {
         this.borrowDate = borrowDate;
     }
 
-    public int getReturnDate() {
+    public Date getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(int returnDate) {
+    public void setReturnDate(Date returnDate) {
         this.returnDate = returnDate;
     }
 
@@ -66,6 +70,5 @@ public class TransactionModel {
     public void setFineAmount(int fineAmount) {
         this.fineAmount = fineAmount;
     }
-            
-          
+    
 }
