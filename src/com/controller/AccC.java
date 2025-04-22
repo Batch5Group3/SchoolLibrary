@@ -1,5 +1,5 @@
 
-package com.app.controller;
+package com.controller;
 
 import com.app.util.DbConnection;
 import java.util.Scanner;

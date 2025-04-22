@@ -1,5 +1,5 @@
 
-package com.app.model;
+package com.model;
 	
 public class TransactionModel {
     private int id;

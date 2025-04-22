@@ -1,7 +1,7 @@
 
-package com.app.controller;
+package com.controller;
 
-import com.app.model.BookModel;
+import com.model.BookModel;
 import com.app.util.DbConnection;
 import java.sql.SQLException;
 import java.util.Scanner;

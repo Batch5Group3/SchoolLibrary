@@ -1,5 +1,5 @@
 
-package com.app.view;
+package com.view;
 
 import com.app.util.DbConnection;
 

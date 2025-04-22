@@ -1,5 +1,5 @@
 
-package com.app.model;
+package com.model;
 
 
 public class AccountModel {
@@ -11,6 +11,12 @@ public class AccountModel {
     private String address;
     private String contactNo;
     private boolean isAdmin;
+
+    public AccountModel(String userName, String password, boolean isAdmin) {
+        this.userName = userName;
+        this.password = password;
+        this.isAdmin = isAdmin;
+    }
 
     public AccountModel() {
     }
@@ -82,7 +88,7 @@ public class AccountModel {
         this.contactNo = contactNo;
     }
 
-    public boolean isIsAdmin() {
+    public boolean isAdmin() {
         return isAdmin;
     }
 
