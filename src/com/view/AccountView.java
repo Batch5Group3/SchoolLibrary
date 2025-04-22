@@ -6,9 +6,6 @@ import com.controller.AccountController;
 import com.model.AccountModel;
 import com.app.util.DbConnection;
 import com.services.AccountService;
-import static com.view.MainMenu.BLUE;
-import static com.view.MainMenu.RESET;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
@@ -26,7 +23,7 @@ public class AccountView extends DbConnection {
     AccountModel accModel = new AccountModel();
     
     public void accountMenu() throws SQLException {
-        MainMenu.clearScreen();
+        System.out.println("\n\n");
         System.out.println("\t\t\t\t╔═══════════════════════════╗");
         System.out.println("\t\t\t\t║           👥 ACCOUNT MANAGEMENT           ║");
         System.out.println("\t\t\t\t╚═══════════════════════════╝");
@@ -41,6 +38,7 @@ public class AccountView extends DbConnection {
         System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
         int choice = sc.nextInt();
         sc.nextLine();
+        
         switch(choice){
             case 1:
                 displayAccount();
@@ -55,10 +53,21 @@ public class AccountView extends DbConnection {
                 deleteAccount();
                 break;
             case 5:
-                main.adminlogInMenu();
+                main.adminLogInMenu();
                 break;
             case 6:
-                main.welcomeMessage();
+                System.out.println("\t\t\t\tAre you sure you want to exit? "
+                    + "\n\t\t\t\t[Y] Yes \n\t\t\t\t[N] No");
+                System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
+                char accChoice = sc.nextLine().charAt(0);
+                    if (accChoice == 'y' || accChoice == 'Y') {
+                    System.out.println("\n\t\t\t\t🔒 Logout successful!");
+                    System.out.println("\t\t\t\t👋 See you next time!\n");
+                    main.welcomeMessage();
+                } else {
+                System.out.println("\n\t\t\t\t❌ Logout failed. Please try again.");
+                accountMenu();
+                }
                 break;
             case 7:
                 main.exitProgram();
@@ -104,6 +113,7 @@ public class AccountView extends DbConnection {
     public void addAccount() throws SQLException{
         
         try {
+            System.out.println("\n\n");
             System.out.println("\t\t\t\t╔═════════════════════════╗");
             System.out.println("\t\t\t\t║         🔐 CREATE YOUR NEW ACCOUNT     ║");
             System.out.println("\t\t\t\t╚═════════════════════════╝");
@@ -126,39 +136,36 @@ public class AccountView extends DbConnection {
             String username;
              while (true)    {
                  System.out.print("\t\t\t\tEnter username: ");
-            username = sc.nextLine();
-            if (accountService.isUsernameTaken(username)) {
-                System.out.println("\n\n\t\t\t\tSorry, username is already taken.");
-                System.out.println("\t\t\t\tPlease enter a new username: ");
-            } else{
-                 break;
-             }
-             }   
-             accModel.setUserName(username);
-            System.out.print("\t\t\t\tEnter password: ");
-            accModel.setPass(sc.nextLine());
-            if (accModel.getFirstName().isEmpty() || accModel.getLastName().isEmpty() || accModel.getUserName().isEmpty() || accModel.getPass().isEmpty())  {
-                 String errorMsg = "Fields cannot be empty. Please try again!";
-                 System.out.println(errorMsg);
-                 addAccount();
-            } else {
-                accountService.addAccount(accModel);
-                System.out.println("\t\t\t\tWelcome " + accModel.getFirstName() + "! You successfully created your account.");
-                waitForEnter(sc);
-                main.welcomeMessage();
-            }
-            
-        
+                 username = sc.nextLine();
+                if (accountService.isUsernameTaken(username)) {
+                    System.out.println("\n\n\t\t\t\tSorry, username is already taken.");
+                    System.out.println("\t\t\t\tPlease enter a new username: ");
+                } else{
+                     break;
+                 }
+                 }   
+                 accModel.setUserName(username);
+                System.out.print("\t\t\t\tEnter password: ");
+                accModel.setPass(sc.nextLine());
+                if (accModel.getFirstName().isEmpty() || accModel.getLastName().isEmpty() || accModel.getUserName().isEmpty() || accModel.getPass().isEmpty())  {
+                    String errorMsg = "Fields cannot be empty. Please try again!";
+                    System.out.println(errorMsg);
+                    addAccount();
+                } else {
+                   accountService.addAccount(accModel);
+                   System.out.println("\t\t\t\tWelcome " + accModel.getFirstName() + "! You successfully created your account.");
+                   waitForEnter(sc);
+                   main.welcomeMessage();
+                }
         } catch (Exception e) {
             System.out.println("\t\t\t\tFailed " + e);
         } 
     }
     
     
-    
     public void searchAccount(){
         
-        MainMenu.clearScreen();
+        System.out.println("\n\n");
         System.out.print("\t\t\t\tEnter first name you want to search: ");
         String searchName = sc.nextLine().toLowerCase();
         System.out.println("══════════════════════════════════════════════════════════════════════════════");
@@ -166,7 +173,6 @@ public class AccountView extends DbConnection {
         "ID", "Username", "Password", "First Name", "Last Name", "Address", "Contact No", "Admin");
         System.out.println("══════════════════════════════════════════════════════════════════════════════");
         
-       
         try {
             List<AccountModel> search = accountService.getByFirstName(searchName);
         
@@ -198,7 +204,7 @@ public class AccountView extends DbConnection {
     
     public void updateAccount() throws SQLException {
         //list account
-        MainMenu.clearScreen();
+        System.out.println("\n\n");
         System.out.print("\t\t\t\tEnter ID you want to update: ");
         int id = sc.nextInt();
         sc.nextLine();
@@ -304,7 +310,7 @@ public class AccountView extends DbConnection {
     }
     
     public void deleteAccount() throws SQLException {
-        MainMenu.clearScreen();
+        System.out.println("\n\n");
         System.out.print("\t\t\t\tEnter User ID you want to delete: ");
         int id = sc.nextInt();
         sc.nextLine();
@@ -330,7 +336,7 @@ public class AccountView extends DbConnection {
     }
     
     public boolean loginAccount() throws SQLException {
-        MainMenu.clearScreen();
+        System.out.println("\n\n");
         String login = "\t\t\t\t╔═════════════════════════════════════╗\n" +
                 "\t\t\t\t║           School Library Management System               ║\n" +
                 "\t\t\t\t╠═════════════════════════════════════╣\n" +
@@ -349,7 +355,7 @@ public class AccountView extends DbConnection {
                 boolean isAdmin = user.isAdmin();
                 System.out.println("\n\t\t\t\tLogin successful!");
                 if (isAdmin) {
-                    main.adminlogInMenu();
+                    main.adminLogInMenu();
                 } else {
                     main.userLoginMenu();
                 }
