@@ -208,7 +208,7 @@ public class TransactionView extends DbConnection{
         int id = scanner.nextInt();
         scanner.nextLine();
         
-        System.out.println("\t\t\t\tAre you sure you want to delete User ID " + id + "?");
+        System.out.println("\t\t\t\tAre you sure you want to delete Transaction ID " + id + "?");
         System.out.println("\t\t\t\t[Y] Yes\n\t\t\t\t[N] No");
         System.out.print("\t\t\t\tEnter choice: ");
         String choice = scanner.nextLine();
