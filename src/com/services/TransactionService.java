@@ -90,7 +90,7 @@ public class TransactionService extends DbConnection implements TransactionDAO<T
     }
 
     @Override
-    public boolean updateTransaction(int id) {
+    public boolean returnBookTransaction(int id) {
         String query = "UPDATE tbl_booktransaction SET return_date = CURRENT_DATE WHERE transaction_id = ?";
         try {
             connect();
@@ -99,8 +99,6 @@ public class TransactionService extends DbConnection implements TransactionDAO<T
             prepare.setInt(1, id);
             int rowsAffected = prepare.executeUpdate();
             bookService.updateBookStatus(transaction.getBookId(), "Available");
-
-            
             return rowsAffected > 0;
 
         } catch (Exception e) {

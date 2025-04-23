@@ -26,7 +26,7 @@ public class TransactionController {
     }
 
     public boolean returnTransaction(int id) {
-        return transactionService.updateTransaction(id);
+        return transactionService.returnBookTransaction(id);
     }
     
     public boolean userBorrowTransaction(TransactionModel transaction){

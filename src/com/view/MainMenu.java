@@ -111,7 +111,8 @@ public class MainMenu {
                     adminLogInMenu();
                     break;
                 case 6:
-                    transactionView.displayTransaction();//return
+                    transactionView.returnBookByTransactionId();
+                    adminLogInMenu();
                     break;
                 case 7:
                     transactionView.transactionMenu();
@@ -141,7 +142,6 @@ public class MainMenu {
     }
     
     public void userLoginMenu() throws SQLException{
-        TransactionView transactionView = new TransactionView();
         System.out.println("\n\n");
         System.out.println("\t\t\t\t╔═════════════════════╗");
         System.out.println("\t\t\t\t║         📚 BORROWER MAIN MENU      ║");
@@ -158,10 +158,11 @@ public class MainMenu {
         switch (choice){
             case 1:
                 bookView.displayAvailableBook();
-                transactionView.userBorrowBookTransaction();
+                borrowChoice();
                 break;
             case 2:
                 bookView.displayBook();
+                userLoginMenu();
                 break;
             case 3:
                 System.out.println("\t\t\t\tAre you sure you want to exit? "
@@ -185,6 +186,24 @@ public class MainMenu {
                 System.out.println("\t\t\t\t⚠ Invalid choice. Please enter a number from the menu.");
                 break;       
         }
+    }
+        public void borrowChoice() throws SQLException{
+            TransactionView transactionView = new TransactionView();
+            System.out.println("\n\n\t\t\t\t  [1] 📖 Borrow Book");
+            System.out.println("\t\t\t\t  [2] 🔙 Back");
+            System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+            switch (choice) {
+                case 1:
+                    transactionView.userBorrowBookTransaction();
+                    break;
+                case 2:
+                     userLoginMenu();
+                    break;
+                default:
+                    System.out.println("Invalid option.");
+            }
     }
     
     public void exitProgram() throws SQLException{

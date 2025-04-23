@@ -26,37 +26,35 @@ public class TransactionView extends DbConnection{
     private final MainMenu main = new MainMenu();
 
     public void transactionMenu() throws SQLException {
-        int choice;        
-        do {
-            System.out.println("\t\t\t\t╔═════════════════════════╗");
-            System.out.println("\t\t\t\t║           📝 MANAGE TRANSACTIONS           ║");
-            System.out.println("\t\t\t\t╚═════════════════════════╝");
-            System.out.println("\t\t\t\t   [1] 📄 View All Transactions");
-            System.out.println("\t\t\t\t   [2] 💸 Apply Fine for Overdue Books");
-            System.out.println("\t\t\t\t   [3] 🗑️ Delete Transaction");
-            System.out.println("\t\t\t\t   [4] 🔙 Back to Main Menu");
-            System.out.println("\t\t\t\t ══════════════════════════");
-            System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
-            choice = scanner.nextInt();
-            scanner.nextLine(); // consume newline
+        int choice;
+        System.out.println("\t\t\t\t╔═════════════════════════╗");
+        System.out.println("\t\t\t\t║           📝 MANAGE TRANSACTIONS           ║");
+        System.out.println("\t\t\t\t╚═════════════════════════╝");
+        System.out.println("\t\t\t\t   [1] 📄 View All Transactions");
+        System.out.println("\t\t\t\t   [2] 💸 Apply Fine for Overdue Books");
+        System.out.println("\t\t\t\t   [3] 🗑️ Delete Transaction");
+        System.out.println("\t\t\t\t   [4] 🔙 Back to Main Menu");
+        System.out.println("\t\t\t\t ══════════════════════════");
+        System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
+        choice = scanner.nextInt();
+        scanner.nextLine(); // consume newline
 
-            switch (choice) {
-                case 1:
-                    displayTransaction();
-                    break;
-                case 2:
-                    //fine amount
-                    break;
-                case 3:
-                    deleteTransaction();
-                    break;
-                case 4:
-                    main.adminLogInMenu();
-                    break;
-                default:
-                    System.out.println("Invalid option.");
-            }
-        } while (choice != 6);
+        switch (choice) {
+            case 1:
+                displayTransaction();
+                break;
+            case 2:
+                //fine amount
+                break;
+            case 3:
+                deleteTransaction();
+                break;
+            case 4:
+                main.adminLogInMenu();
+                break;
+            default:
+                System.out.println("Invalid option.");
+        }
     }
 
     public void borrowTransaction() {
@@ -80,17 +78,17 @@ public class TransactionView extends DbConnection{
         transactionService.add(transaction);
 //        transactionController.addTransaction(transaction);
         System.out.println(GREEN+"\n\t\t\t\t📖 Book Borrowed Successfully!"+RESET);
-        System.out.println("\t\t\t\t═════════════════════════════════════");
+        System.out.println("\t\t\t\t═══════════════════════════════════");
         System.out.println("\t\t\t\tUser ID       : " + transaction.getUserId());
         System.out.println("\t\t\t\tBook ID       : " + transaction.getBookId());
         System.out.println("\t\t\t\tBorrow Date   : " + transaction.getBorrowDate());
         System.out.println("\t\t\t\tReturn Date   : Not Returned Yet");
         System.out.println("\t\t\t\tFine Amount   : ₱" + transaction.getFineAmount());
-        System.out.println("\t\t\t\t═════════════════════════════════════");
+        System.out.println("\t\t\t\t═══════════════════════════════════");
         waitForEnter(scanner);
     }
     
-    public void displayTransaction() {
+    public void displayTransaction() throws SQLException {
         List<TransactionModel> transaction = transactionService.getAll();
         System.out.println();
         System.out.println(BLUE +"\n═════════════════════ TRANSACTION DETAILS ══════════════════════"+ RESET);
@@ -109,9 +107,10 @@ public class TransactionView extends DbConnection{
         }
         System.out.println("═══════════════════════════════════════════════════════");
         waitForEnter(scanner);
+        transactionMenu();
     }
 
-    public void findTransactionById() {
+    public void findTransactionById() throws SQLException {
         System.out.print("Enter Transaction ID: ");
         int id = scanner.nextInt();
         scanner.nextLine();
@@ -124,14 +123,16 @@ public class TransactionView extends DbConnection{
         }
     }
 
-    public void returnBookByTransactionId() {
-        System.out.print("Enter Transaction ID to return the book: ");
+    public void returnBookByTransactionId() throws SQLException {
+        System.out.print("\n\n\t\t\t\tEnter Transaction ID to return the book: ");
         int id = scanner.nextInt();
         scanner.nextLine();
 
         TransactionModel transaction = transactionController.findTransactionById(id);
         if (transaction == null) {
             System.out.println("⚠ Transaction not found.");
+            waitForEnter(scanner);
+            main.adminLogInMenu();
             return;
         }
         boolean success = transactionController.returnTransaction(id);
@@ -143,11 +144,11 @@ public class TransactionView extends DbConnection{
             waitForEnter(scanner);
     }
     
-    public void userBorrowBookTransaction() {
+    public void userBorrowBookTransaction() throws SQLException {
         BookService bookService = new BookService();
-        System.out.println("\t\t\t\t╔═════════════════════════════════╗");
+        System.out.println("\t\t\t\t╔═══════════════════════════════╗");
         System.out.println("\t\t\t\t║                    📚 BORROW A BOOK                 ║");
-        System.out.println("\t\t\t\t╚═════════════════════════════════╝");
+        System.out.println("\t\t\t\t╚═══════════════════════════════╝");
 
         System.out.print("\t\t\t\tEnter your User ID: ");
         int userId = scanner.nextInt();
@@ -159,9 +160,9 @@ public class TransactionView extends DbConnection{
 
         System.out.print("\t\t\t\tEnter Borrow Date (yyyy-mm-dd): ");
         String borrowDateStr = scanner.nextLine();
-        System.out.println("\t\t\t\t═══════════════════════════════════");
+        System.out.println("\t\t\t\t═════════════════════════════════");
 
-        BookModel book = bookService.getById(transaction.getBookId());
+        BookModel book = bookService.getById(bookId);
         
         if (book == null || !book.getStatus().equalsIgnoreCase("Available")) {
             System.out.println("\t\t\t\t⚠ Book is not available for borrowing.");
@@ -178,17 +179,18 @@ public class TransactionView extends DbConnection{
         
         if (success) {
             System.out.println(GREEN+"\n\t\t\t\t📖 Book Borrowed Successfully!"+RESET);
-            System.out.println("\t\t\t\t═════════════════════════════════════");
+            System.out.println("\t\t\t\t═══════════════════════════════════");
             System.out.println("\t\t\t\tUser ID       : " + transaction.getUserId());
             System.out.println("\t\t\t\tBook ID       : " + transaction.getBookId());
             System.out.println("\t\t\t\tBorrow Date   : " + transaction.getBorrowDate());
             System.out.println("\t\t\t\tReturn Date   : " + (transaction.getReturnDate() != null ? transaction.getReturnDate() : "Not returned yet"));
             System.out.println("\t\t\t\tFine Amount   : ₱" + transaction.getFineAmount());
-            System.out.println("\t\t\t\t═════════════════════════════════════");
+            System.out.println("\t\t\t\t═══════════════════════════════════");
         }else {
             System.out.println("\t\t\t\t❌ Failed to borrow book. Please check book availability or try again.");
         }
         waitForEnter(scanner);
+        main.userLoginMenu();
     }
 
     public void deleteTransaction() throws SQLException {

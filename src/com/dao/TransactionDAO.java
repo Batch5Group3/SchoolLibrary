@@ -11,7 +11,7 @@ public interface TransactionDAO<T> {
         List<T> getAll(); // Read
         T getById(int id); // Read
         T getTransactionById(int id); //Read
-        boolean updateTransaction(int id); // Update
+        boolean returnBookTransaction(int id); // Update
         boolean borrowBookTransaction(T item);
         boolean deleteItem(int id); // Delete
     
