@@ -25,12 +25,21 @@ public class TransactionController {
         return transactionService.getById(id);
     }
 
-    public boolean returnTransaction(int id) {
-        return transactionService.returnBookTransaction(id);
+    public boolean returnTransaction(int id, double fineAmount) {
+        return transactionService.returnBookTransaction(id, fineAmount);
     }
     
     public boolean userBorrowTransaction(TransactionModel transaction){
         return transactionService.borrowBookTransaction(transaction);
+    }
+    
+    public double previewFineAmount(int transactionId) {
+        TransactionModel transaction = transactionService.getTransactionById(transactionId);
+        if (transaction != null) {
+            java.sql.Date today = new java.sql.Date(System.currentTimeMillis());
+            return transactionService.computeFineAmount(transaction.getBorrowDate(), today);
+        }
+        return 0.0;
     }
 
     public void deleteTransaction(int id) {

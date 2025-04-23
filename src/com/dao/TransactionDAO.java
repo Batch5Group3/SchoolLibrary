@@ -1,6 +1,7 @@
 
 package com.dao;
 
+import java.sql.Date;
 import java.util.List;
 
 // <T> indicates this is a generic type
@@ -11,8 +12,9 @@ public interface TransactionDAO<T> {
         List<T> getAll(); // Read
         T getById(int id); // Read
         T getTransactionById(int id); //Read
-        boolean returnBookTransaction(int id); // Update
+        boolean returnBookTransaction(int id, double fineAmount); // Update
         boolean borrowBookTransaction(T item);
+        double computeFineAmount(Date borrowDate, Date returnDate);
         boolean deleteItem(int id); // Delete
     
 }

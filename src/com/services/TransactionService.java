@@ -4,7 +4,9 @@ package com.services;
 import com.app.util.DbConnection;
 import com.dao.TransactionDAO;
 import com.model.TransactionModel;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,21 +92,28 @@ public class TransactionService extends DbConnection implements TransactionDAO<T
     }
 
     @Override
-    public boolean returnBookTransaction(int id) {
-        String query = "UPDATE tbl_booktransaction SET return_date = CURRENT_DATE WHERE transaction_id = ?";
+    public boolean returnBookTransaction(int id, double fineAmount) {
+        String query = "UPDATE tbl_booktransaction SET return_date = CURRENT_DATE, fine_amount = ? WHERE transaction_id = ?";
+
         try {
             connect();
-            TransactionModel transaction = getTransactionById(id);
-            prepare = connect.prepareStatement(query);
-            prepare.setInt(1, id);
-            int rowsAffected = prepare.executeUpdate();
-            bookService.updateBookStatus(transaction.getBookId(), "Available");
-            return rowsAffected > 0;
 
+            TransactionModel transaction = getTransactionById(id);
+            if (transaction == null) 
+                return false;
+
+            prepare = connect.prepareStatement(query);
+            prepare.setDouble(1, fineAmount);
+            prepare.setInt(2, id);
+
+            int rowsAffected = prepare.executeUpdate();
+            if (rowsAffected > 0) {
+                bookService.updateBookStatus(transaction.getBookId(), "Available");
+                return true; 
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return false;
     }
 
@@ -164,5 +173,21 @@ public class TransactionService extends DbConnection implements TransactionDAO<T
         return false;
     }
     }
-    
+
+    @Override
+    public double computeFineAmount(Date borrowDate, Date returnDate) {
+        double fineAmount = 0.0;
+        if (returnDate != null && returnDate.after(borrowDate)) {
+            long totalDays = ChronoUnit.DAYS.between(
+                    borrowDate.toLocalDate(),
+                    returnDate.toLocalDate());
+            
+            long overdueDays = totalDays - 5;
+            
+            if (overdueDays > 0) {
+                fineAmount = overdueDays * 5.0;
+            }
+        }
+        return fineAmount;
+    }
 }

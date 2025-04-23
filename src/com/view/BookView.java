@@ -85,14 +85,14 @@ public class BookView extends DbConnection{
         System.out.println("t\t\t\t╔═══════════════════════════════╗");
         System.out.println("t\t\t\t║                  📘 ADD NEW BOOK                ║");
         System.out.println("t\t\t\t╚═══════════════════════════════╝");
-        System.out.print("t\t\t\tEnter Title           : ");
+        System.out.print("\t\t\t\tEnter Title           : ");
         bookModel.setTitle(scanner.nextLine());
-        System.out.print("t\t\t\tEnter Author          : ");
+        System.out.print("\t\t\t\tEnter Author          : ");
         bookModel.setAuthor(scanner.nextLine());
-        System.out.print("t\t\t\tEnter Year Published  : ");
+        System.out.print("\t\t\t\tEnter Year Published  : ");
         bookModel.setPubYear(scanner.nextInt());
         scanner.nextLine();
-        System.out.print("t\t\t\tEnter Type/Genre      : ");
+        System.out.print("\t\t\t\tEnter Type/Genre      : ");
         bookModel.setType(scanner.nextLine());
         
         if (bookModel.getTitle().isEmpty() || bookModel.getAuthor().isEmpty() || bookModel.getType().isEmpty()) {
@@ -100,7 +100,7 @@ public class BookView extends DbConnection{
                 addBook();
             } else {
             bookService.add(bookModel);
-                System.out.println("\t\t\t\t✔ Book added successfully!");
+                System.out.println(GREEN+"\n\t\t\t\t✔ Book added successfully!"+RESET);
                 displayBook();
             }
         return null;
@@ -232,25 +232,25 @@ public class BookView extends DbConnection{
     
     public void findBookById() {
         
-        System.out.print("\t\t\t\tEnter Book ID you want to find: ");
+        System.out.print("\n\t\t\t\tEnter Book ID you want to find: ");
         int bookId = scanner.nextInt();
         scanner.nextLine();
         BookModel book = bookService.getById(bookId);
         
         if (book != null) {
-            System.out.println("\t═════════════════════════════════════════════════════════════════════════");
-            System.out.println("\t                                                  📘  BOOK DETAILS                             ");
-            System.out.println("\t═════════════════════════════════════════════════════════════════════════");
-            System.out.printf("\t| %-5s | %-30s | %-20s | %-15s | %-30s | %-10s |\n", "ID", "Title", "Author", "Year", "Type", "Status");
-            System.out.println("\t═════════════════════════════════════════════════════════════════════════");
-            System.out.printf("\t| %-5d | %-30s | %-20s | %-15d | %-30s | %-10s |\n", 
+            System.out.println("═════════════════════════════════════════════════════════════════════════");
+            System.out.println("                                                  📘  BOOK DETAILS                             ");
+            System.out.println("═════════════════════════════════════════════════════════════════════════");
+            System.out.printf("| %-5s | %-30s | %-20s | %-15s | %-30s | %-10s |\n", "ID", "Title", "Author", "Year", "Type", "Status");
+            System.out.println("═════════════════════════════════════════════════════════════════════════");
+            System.out.printf("| %-5d | %-30s | %-20s | %-15d | %-30s | %-10s |\n", 
                   book.getId(), 
                   book.getTitle(), 
                   book.getAuthor(), 
                   book.getPubYear(), 
                   book.getType(), 
                   book.getStatus());
-            System.out.println("\t══════════════════════════════════════════════════════════════════");
+            System.out.println("═════════════════════════════════════════════════════════════════════════");
             waitForEnter(scanner);
         } else {
             System.out.println(RED + "\t\t\t\t⚠Book not found!" + RESET);

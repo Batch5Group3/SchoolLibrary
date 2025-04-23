@@ -107,7 +107,7 @@ public class MainMenu {
                     adminLogInMenu();
                     break;
                 case 5:
-                    transactionView.borrowTransaction();
+                    transactionView.borrowBookTransaction();
                     adminLogInMenu();
                     break;
                 case 6:
@@ -144,7 +144,7 @@ public class MainMenu {
     public void userLoginMenu() throws SQLException{
         System.out.println("\n\n");
         System.out.println("\t\t\t\t╔═════════════════════╗");
-        System.out.println("\t\t\t\t║         📚 BORROWER MAIN MENU      ║");
+        System.out.println("\t\t\t\t║         📚 BORROWER MAIN MENU       ║");
         System.out.println("\t\t\t\t╚═════════════════════╝");
         System.out.println("\t\t\t\t  [1] 🔍 Check Book Availability");
         System.out.println("\t\t\t\t  [2] 📖 Book List");
@@ -196,7 +196,7 @@ public class MainMenu {
             scanner.nextLine();
             switch (choice) {
                 case 1:
-                    transactionView.userBorrowBookTransaction();
+                    transactionView.borrowBookTransaction();
                     break;
                 case 2:
                      userLoginMenu();

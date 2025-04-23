@@ -31,7 +31,7 @@ public class TransactionView extends DbConnection{
         System.out.println("\t\t\t\t║           📝 MANAGE TRANSACTIONS           ║");
         System.out.println("\t\t\t\t╚═════════════════════════╝");
         System.out.println("\t\t\t\t   [1] 📄 View All Transactions");
-        System.out.println("\t\t\t\t   [2] 💸 Apply Fine for Overdue Books");
+        System.out.println("\t\t\t\t   [2] 🔍 Search Transaction");
         System.out.println("\t\t\t\t   [3] 🗑️ Delete Transaction");
         System.out.println("\t\t\t\t   [4] 🔙 Back to Main Menu");
         System.out.println("\t\t\t\t ══════════════════════════");
@@ -44,7 +44,7 @@ public class TransactionView extends DbConnection{
                 displayTransaction();
                 break;
             case 2:
-                //fine amount
+                findTransactionById();
                 break;
             case 3:
                 deleteTransaction();
@@ -56,46 +56,15 @@ public class TransactionView extends DbConnection{
                 System.out.println("Invalid option.");
         }
     }
-
-    public void borrowTransaction() {
-        
-        System.out.print("\t\t\t\tEnter User ID: ");
-        transaction.setUserId(scanner.nextInt());
-
-        System.out.print("\t\t\t\tEnter Book ID: ");
-        transaction.setBookId(scanner.nextInt());
-        scanner.nextLine();
-
-        System.out.print("\t\t\t\tEnter Borrow Date (yyyy-mm-dd): ");
-        transaction.setBorrowDate(Date.valueOf(scanner.nextLine()));
-
-        System.out.print("\t\t\t\tEnter Fine Amount: ₱");
-        transaction.setFineAmount((int) scanner.nextDouble());
-        scanner.nextLine();
-        
-        transaction.setReturnDate(null);
-        
-        transactionService.add(transaction);
-//        transactionController.addTransaction(transaction);
-        System.out.println(GREEN+"\n\t\t\t\t📖 Book Borrowed Successfully!"+RESET);
-        System.out.println("\t\t\t\t═══════════════════════════════════");
-        System.out.println("\t\t\t\tUser ID       : " + transaction.getUserId());
-        System.out.println("\t\t\t\tBook ID       : " + transaction.getBookId());
-        System.out.println("\t\t\t\tBorrow Date   : " + transaction.getBorrowDate());
-        System.out.println("\t\t\t\tReturn Date   : Not Returned Yet");
-        System.out.println("\t\t\t\tFine Amount   : ₱" + transaction.getFineAmount());
-        System.out.println("\t\t\t\t═══════════════════════════════════");
-        waitForEnter(scanner);
-    }
     
     public void displayTransaction() throws SQLException {
         List<TransactionModel> transaction = transactionService.getAll();
         System.out.println();
-        System.out.println(BLUE +"\n═════════════════════ TRANSACTION DETAILS ══════════════════════"+ RESET);
-        System.out.println("═══════════════════════════════════════════════════════");
+        System.out.println(BLUE +"\n════════════════════ TRANSACTION DETAILS ═════════════════════"+ RESET);
+        System.out.println("═════════════════════════════════════════════════════");
         System.out.printf("| %-13s | %-10s | %-10s | %-15s | %-15s | %-10s |\n",
                 "Transaction ID", "User ID", "Book ID", "Borrow Date", "Return Date", "Fine");
-        System.out.println("═══════════════════════════════════════════════════════");
+        System.out.println("═════════════════════════════════════════════════════");
         for (TransactionModel t : transaction) {
             System.out.printf("| %-14d | %-10d | %-10d | %-15s | %-15s | ₱%-9.2f |\n",
                     t.getId(),
@@ -105,50 +74,90 @@ public class TransactionView extends DbConnection{
                     t.getReturnDate(),
                     t.getFineAmount());
         }
-        System.out.println("═══════════════════════════════════════════════════════");
+        System.out.println("═════════════════════════════════════════════════════");
         waitForEnter(scanner);
         transactionMenu();
     }
 
     public void findTransactionById() throws SQLException {
-        System.out.print("Enter Transaction ID: ");
+        List<TransactionModel> transaction = transactionService.getAll();
+        System.out.print("\n\t\t\t\tEnter Transaction ID: ");
         int id = scanner.nextInt();
         scanner.nextLine();
 
         TransactionModel t = transactionController.findTransactionById(id);
         if (t != null) {
-            displayTransaction();
+            System.out.println(BLUE +"\n════════════════════ TRANSACTION DETAILS ═════════════════════"+ RESET);
+        System.out.println("═════════════════════════════════════════════════════");
+        System.out.printf("| %-13s | %-10s | %-10s | %-15s | %-15s | %-10s |\n",
+                "Transaction ID", "User ID", "Book ID", "Borrow Date", "Return Date", "Fine");
+        System.out.println("═════════════════════════════════════════════════════");
+        System.out.printf("| %-14d | %-10d | %-10d | %-15s | %-15s | ₱%-9.2f |\n",
+                t.getId(),
+                t.getUserId(),
+                t.getBookId(),
+                t.getBorrowDate(),
+                t.getReturnDate() != null ? t.getReturnDate() : "Not returned",
+                t.getFineAmount());
+        
+        System.out.println("═════════════════════════════════════════════════════");
         } else {
-            System.out.println("Transaction not found.");
+            System.out.println(RED+"\t\t\t\t⚠ Transaction not found."+RESET);
         }
-    }
-
-    public void returnBookByTransactionId() throws SQLException {
-        System.out.print("\n\n\t\t\t\tEnter Transaction ID to return the book: ");
-        int id = scanner.nextInt();
-        scanner.nextLine();
-
-        TransactionModel transaction = transactionController.findTransactionById(id);
-        if (transaction == null) {
-            System.out.println("⚠ Transaction not found.");
-            waitForEnter(scanner);
-            main.adminLogInMenu();
-            return;
-        }
-        boolean success = transactionController.returnTransaction(id);
-            if (success) {
-                System.out.println("\t\t\t\t✔ Book marked as returned.");
-            } else {
-                System.out.println("\t\t\t\t❌ Failed to mark book as returned.");
-            }
-            waitForEnter(scanner);
+        waitForEnter(scanner);
+        transactionMenu();
     }
     
-    public void userBorrowBookTransaction() throws SQLException {
+    public void returnBookByTransactionId() throws SQLException {
+        List<TransactionModel> transaction = transactionService.getAll();
+        System.out.println("\n══════════════════════════════════════════════════════");
+        System.out.println("                                📚  RETURN BOOK  📚 ");
+        System.out.println("══════════════════════════════════════════════════════");
+        System.out.printf("| %-13s | %-10s | %-10s | %-15s | %-15s | %-10s |\n",
+                "Transaction ID", "User ID", "Book ID", "Borrow Date", "Return Date", "Fine");
+        System.out.println("══════════════════════════════════════════════════════");
+        for (TransactionModel t : transaction) {
+            System.out.printf("| %-14d | %-10d | %-10d | %-15s | %-15s | ₱%-9.2f |\n",
+                    t.getId(),
+                    t.getUserId(),
+                    t.getBookId(),
+                    t.getBorrowDate(),
+                    t.getReturnDate(),
+                    t.getFineAmount());
+        }
+        System.out.println("══════════════════════════════════════════════════════");
+        
+        System.out.print("\n\t\t\t\tEnter Transaction ID: ");
+        int transactionId = scanner.nextInt();
+        scanner.nextLine();
+
+        double fine = transactionController.previewFineAmount(transactionId);
+        System.out.println("\t\t\t\tFine (if returned today): ₱" + fine);
+
+        System.out.print("\t\t\t\tConfirm return?");
+        System.out.println("\n\t\t\t\t[Y] Yes\n\t\t\t\t[N] No");
+        System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
+        String confirm = scanner.nextLine();
+        if ("Y".equalsIgnoreCase(confirm)) {
+            boolean success = transactionService.returnBookTransaction(transactionId, fine);
+            if (success) {
+                System.out.println(GREEN+"\n\t\t\t\t✔ Book marked as returned."+RESET);
+            } else {
+                System.out.println(RED+"\t\t\t\t❌ Failed to mark book as returned."+RESET);
+            }
+        } else {
+            System.out.println("\t\t\t\t❌ Return cancelled.");
+        }
+
+        waitForEnter(scanner);
+        main.adminLogInMenu();
+}
+    
+    public void borrowBookTransaction() throws SQLException {
         BookService bookService = new BookService();
-        System.out.println("\t\t\t\t╔═══════════════════════════════╗");
-        System.out.println("\t\t\t\t║                    📚 BORROW A BOOK                 ║");
-        System.out.println("\t\t\t\t╚═══════════════════════════════╝");
+        System.out.println("\t\t\t\t╔═════════════════════════════╗");
+        System.out.println("\t\t\t\t║                 📚 BORROW A BOOK                 ║");
+        System.out.println("\t\t\t\t╚═════════════════════════════╝");
 
         System.out.print("\t\t\t\tEnter your User ID: ");
         int userId = scanner.nextInt();
@@ -160,7 +169,7 @@ public class TransactionView extends DbConnection{
 
         System.out.print("\t\t\t\tEnter Borrow Date (yyyy-mm-dd): ");
         String borrowDateStr = scanner.nextLine();
-        System.out.println("\t\t\t\t═════════════════════════════════");
+        System.out.println("\t\t\t\t═══════════════════════════════");
 
         BookModel book = bookService.getById(bookId);
         
@@ -179,13 +188,14 @@ public class TransactionView extends DbConnection{
         
         if (success) {
             System.out.println(GREEN+"\n\t\t\t\t📖 Book Borrowed Successfully!"+RESET);
-            System.out.println("\t\t\t\t═══════════════════════════════════");
+            System.out.println("\t\t\t\t════════════════════════════════");
             System.out.println("\t\t\t\tUser ID       : " + transaction.getUserId());
             System.out.println("\t\t\t\tBook ID       : " + transaction.getBookId());
             System.out.println("\t\t\t\tBorrow Date   : " + transaction.getBorrowDate());
             System.out.println("\t\t\t\tReturn Date   : " + (transaction.getReturnDate() != null ? transaction.getReturnDate() : "Not returned yet"));
             System.out.println("\t\t\t\tFine Amount   : ₱" + transaction.getFineAmount());
-            System.out.println("\t\t\t\t═══════════════════════════════════");
+            System.out.println("\t\t\t\t════════════════════════════════");
+            System.out.println(BLUE + "\t\t\t\t📌 Please return the book within 5 days to avoid a late fee." + RESET);
         }else {
             System.out.println("\t\t\t\t❌ Failed to borrow book. Please check book availability or try again.");
         }

@@ -109,9 +109,9 @@ public class AccountView extends DbConnection {
     public void addAccount() throws SQLException{
        
             System.out.println("\n\n");
-            System.out.println("\t\t\t\t╔═════════════════════════╗");
-            System.out.println("\t\t\t\t║         🔐 CREATE YOUR NEW ACCOUNT     ║");
-            System.out.println("\t\t\t\t╚═════════════════════════╝");
+            System.out.println("\t\t\t\t╔════════════════════════╗");
+            System.out.println("\t\t\t\t║          🔐 CREATE YOUR NEW ACCOUNT     ║");
+            System.out.println("\t\t\t\t╚════════════════════════╝");
             System.out.print("\t\t\t\tEnter first name: ");
             accModel.setFirstName(sc.nextLine());
             System.out.print("\t\t\t\tEnter last name: ");
@@ -149,7 +149,7 @@ public class AccountView extends DbConnection {
                     addAccount();
                 } else {
                    accountService.addAccount(accModel);
-                   System.out.println("\t\t\t\tWelcome " + accModel.getFirstName() + "! You successfully created your account.");
+                   System.out.println(GREEN+"\n\t\t\t\tWelcome " + accModel.getFirstName() + "! You successfully created your account."+RESET);
                    waitForEnter(sc);
                    main.welcomeMessage();
                 }
