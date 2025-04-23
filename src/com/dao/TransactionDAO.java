@@ -10,7 +10,9 @@ public interface TransactionDAO<T> {
         boolean add(T item); // Create
         List<T> getAll(); // Read
         T getById(int id); // Read
-        void updateItem(T id); // Update
+        T getTransactionById(int id); //Read
+        boolean updateTransaction(int id); // Update
+        boolean borrowBookTransaction(T item);
         boolean deleteItem(int id); // Delete
     
 }

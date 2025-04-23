@@ -12,6 +12,8 @@ import java.util.Scanner;
 
 
 public class MainMenu {
+    Scanner scanner = new Scanner(System.in);
+    public static final String RED = "\033[1;31m";
     public static final String RESET = "\u001B[0m";
     public static final String PURPLE = "\u001B[35m";
     public static final String BLUE = "\u001B[34m";
@@ -27,7 +29,6 @@ public class MainMenu {
     public void welcomeMessage() throws SQLException{
         
         AccountView accountView = new AccountView();
-        Scanner scanner = new Scanner(System.in);
         int choiceAcc;
         String welcome =
                 "\t\t\t\t__        __   _                            \n" +
@@ -36,17 +37,18 @@ public class MainMenu {
                 "\t\t\t\t  \\ V  V /  __/ | (_| (_) | | | | | |  __/\n" +
                 "\t\t\t\t   \\_/\\_/ \\___|_|\\___\\___/|_| |_| |_|\\___| \n" +
                 PURPLE + "\t\t\t\t   📖 SCHOOL LIBRARY MANAGEMENT SYSTEM 📖\n" + RESET +
-                "\t\t\t\t╔═════════════════════════╗\n" +
-                "\t\t\t\t║            🔐 ACCOUNT MENU              ║\n" +
-                "\t\t\t\t╚═════════════════════════╝\n" +
+                "\t\t\t\t╔════════════════════════╗\n" +
+                "\t\t\t\t║            🔐 ACCOUNT MENU               ║\n" +
+                "\t\t\t\t╚════════════════════════╝\n" +
                 "\t\t\t\t  [1] Log In to Your Account              \n" +
                 "\t\t\t\t  [2] Sign Up for a New Account           \n" +
                 "\t\t\t\t  [3] Exit Application                    \n" +
-                "\t\t\t\t ══════════════════════════\n";
+                "\t\t\t\t ════════════════════════\n";
         System.out.println("\n\n");
         System.out.print(welcome);
         System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
         choiceAcc = scanner.nextInt();
+        scanner.nextLine();
         switch(choiceAcc){
             case 1:
                 accountView.logInHeader();
@@ -67,11 +69,10 @@ public class MainMenu {
     public void adminLogInMenu() throws SQLException{
         AccountView accountView = new AccountView();
         TransactionView transactionView = new TransactionView();
-        Scanner scanner = new Scanner(System.in);
         int chocieMenu; 
         String menu =
                 "\t\t\t\t╔═════════════════════════╗\n"+
-                "\t\t\t\t║            👥 ADMIN MAIN MENU           ║\n"+
+                "\t\t\t\t║             👥 ADMIN MAIN MENU             ║\n"+
                 "\t\t\t\t╚═════════════════════════╝\n"+
                 "\t\t\t\t   [1] 📚 Manage Books\n" +
                 "\t\t\t\t   [2] 👤 Manage Account\n" +
@@ -107,9 +108,10 @@ public class MainMenu {
                     break;
                 case 5:
                     transactionView.borrowTransaction();
+                    adminLogInMenu();
                     break;
                 case 6:
-                    transactionView.viewAllTransactions();//return
+                    transactionView.displayTransaction();//return
                     break;
                 case 7:
                     transactionView.transactionMenu();
@@ -120,11 +122,12 @@ public class MainMenu {
                     System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
                     char choice = scanner.nextLine().charAt(0);
                     if (choice == 'y' || choice == 'Y') {
-                        System.out.println("\n\t\t\t\t🔒 Logout successful!");
+                        System.out.println(GREEN+"\n\t\t\t\t🔒 Logout successful!"+RESET);
                         System.out.println("\t\t\t\t👋 See you next time!\n");
                         welcomeMessage();
                     } else {
-                    System.out.println("\n\t\t\t\t❌ Logout failed. Please try again.");
+                    System.out.println(RED+"\n\t\t\t\t❌ Logout failed."+RESET);
+                    bookView.waitForEnter(scanner);
                     adminLogInMenu();
                     }
                     break;
@@ -138,16 +141,16 @@ public class MainMenu {
     }
     
     public void userLoginMenu() throws SQLException{
-        Scanner scanner = new Scanner(System.in);
+        TransactionView transactionView = new TransactionView();
         System.out.println("\n\n");
         System.out.println("\t\t\t\t╔═════════════════════╗");
-        System.out.println("\t\t\t\t║       📚 BORROWER MAIN MENU     ║");
+        System.out.println("\t\t\t\t║         📚 BORROWER MAIN MENU      ║");
         System.out.println("\t\t\t\t╚═════════════════════╝");
         System.out.println("\t\t\t\t  [1] 🔍 Check Book Availability");
         System.out.println("\t\t\t\t  [2] 📖 Book List");
         System.out.println("\t\t\t\t  [3] 🔐 Log Out");
         System.out.println("\t\t\t\t  [4] ❌ Exit Application");
-        System.out.println("\t\t\t\t╚═════════════════════╝");
+        System.out.println("\t\t\t\t══════════════════════");
         System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
         int choice = scanner.nextInt();
         scanner.nextLine();
@@ -155,7 +158,7 @@ public class MainMenu {
         switch (choice){
             case 1:
                 bookView.displayAvailableBook();
-                
+                transactionView.userBorrowBookTransaction();
                 break;
             case 2:
                 bookView.displayBook();
@@ -166,11 +169,12 @@ public class MainMenu {
                 System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
                 char userChoice = scanner.nextLine().charAt(0);
                 if (userChoice == 'y' || userChoice == 'Y') {
-                    System.out.println("\n\t\t\t\t🔒 Logout successful!");
+                    System.out.println(GREEN+"\n\t\t\t\t🔒 Logout successful!"+RESET);
                     System.out.println("\t\t\t\t👋 See you next time!\n");
                     welcomeMessage();
                 } else {
-                    System.out.println("\n\t\t\t\t❌ Logout failed. Please try again.");
+                    System.out.println(RED+"\n\t\t\t\t❌ Logout failed."+RESET);
+                    bookView.waitForEnter(scanner);
                     userLoginMenu();
                 }
                 break;
@@ -184,19 +188,24 @@ public class MainMenu {
     }
     
     public void exitProgram() throws SQLException{
-        Scanner scanner = new Scanner(System.in);
         System.out.println("\t\t\t\tAre you sure you want to exit? "
                 + "\n\t\t\t\t[Y] Yes \n\t\t\t\t[N] No");
         System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
-        char choice = scanner.nextLine().charAt(0);
-        if (choice == 'y' || choice == 'Y') {
-            System.out.println("\n\n\t\t\t\t📚 Thank you for using the School Library Management System!");
-            System.out.println("\t\t\t\t👋 Exiting the program... Have a great day!");
-            System.exit(0);
-            scanner.close();
+        String input = scanner.nextLine().trim();
+        if (!input.isEmpty()) {
+            char choice = input.charAt(0);
+            if (choice == 'y' || choice == 'Y') {
+                System.out.println("\n\n\t\t\t\t📚 Thank you for using the School Library Management System!");
+                System.out.println("\t\t\t\t👋 Have a great day! Exiting the program...");
+                scanner.close();
+                System.exit(0);
+            } else {
+                System.out.println(RED+"\n\t\t\t\t❌ Exit canceled.\n\n\n"+RESET);
+                welcomeMessage();
+            }
         } else {
-            System.out.println("\t\t\t\tFailed to Exit\n\n\n");
-            welcomeMessage();
+            System.out.println(RED + "\n\t\t\t⚠ Invalid input. Please enter Y or N.\n" + RESET);
+            exitProgram();
         }
     }
     

@@ -27,7 +27,7 @@ public class AccountView extends DbConnection {
     public void accountMenu() throws SQLException {
         System.out.println("\n\n");
         System.out.println("\t\t\t\t╔═════════════════════════╗");
-        System.out.println("\t\t\t\t║          👥 ACCOUNT MANAGEMENT          ║");
+        System.out.println("\t\t\t\t║            👥 ACCOUNT MANAGEMENT           ║");
         System.out.println("\t\t\t\t╚═════════════════════════╝");
         System.out.println("\t\t\t\t  [1] 📜 List of Accounts");
         System.out.println("\t\t\t\t  [2] ✏️ Update Account");
@@ -178,12 +178,14 @@ public class AccountView extends DbConnection {
                         acc.getAddress(),
                         acc.getContactNo(),
                         acc.isAdmin() ? "Yes" : "No");
+                System.out.println("════════════════════════════════════════════════════════════════════════════════");
+
             }
                 waitForEnter(sc);
                 accountMenu();
                 
             } else {
-                System.out.println(RED + "\t\t\t\tNo User Found! Please try again." + RESET);
+                System.out.println(RED + "\t\t\t\t⚠No User Found! Please try again." + RESET);
                 waitForEnter(sc);
                 searchAccount();
             }
@@ -311,7 +313,7 @@ public class AccountView extends DbConnection {
                 System.out.println("\t\t\t\tUser ID " + id + " is successfully deleted!");
                 
             } else {
-                System.out.println("\t\t\t\tDelete canceled.");
+                System.out.println(RED+"\t\t\t\tDelete canceled."+RESET);
             }
         waitForEnter(sc);
         accountMenu();
@@ -339,18 +341,17 @@ public class AccountView extends DbConnection {
             } else {
             System.out.println(RED + "\n\t\t\t\t❌Invalid credentials. Please try again." + RESET);
             loginAccount();
-            
             }
         } 
     }
     
     public void logInHeader(){
         System.out.println("\n\n");
-        String login = "\t\t\t\t╔════════════════════════════════╗\n" +
-                       "\t\t\t\t║         School Library Management System           ║\n" +
-                       "\t\t\t\t╠════════════════════════════════╣\n" +
-                       "\t\t\t\t║               LOGIN TO CONTINUE                    ║\n" +
-                       "\t\t\t\t╚════════════════════════════════╝";
+        String login = "\t\t\t\t╔═════════════════════════════╗\n" +
+                       "\t\t\t\t║         School Library Management System          ║\n" +
+                       "\t\t\t\t╠═════════════════════════════╣\n" +
+                       "\t\t\t\t║               LOGIN TO CONTINUE                   ║\n" +
+                       "\t\t\t\t╚═════════════════════════════╝";
         System.out.println(login);
     }
     

@@ -4,14 +4,16 @@ package com.services;
 import com.app.util.DbConnection;
 import com.dao.TransactionDAO;
 import com.model.TransactionModel;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionService extends DbConnection implements TransactionDAO<TransactionModel> {
     private final BookService bookService = new BookService();  
+    
     @Override
     public boolean add(TransactionModel item) {
-        String query = "INSERT INTO tbl_booktransaction (user_id, book_id, borrow_date, return_date, fine_amount) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO tbl_booktransaction (user_id, book_id, borrow_date, fine_amount) VALUES (?, ?, ?, ?)";
 
         try {
             connect();
@@ -21,11 +23,12 @@ public class TransactionService extends DbConnection implements TransactionDAO<T
             prepare.setInt(1, item.getUserId());
             prepare.setInt(2, item.getBookId());
             prepare.setDate(3, item.getBorrowDate());
-            prepare.setDate(4, item.getReturnDate());
-            prepare.setDouble(5, item.getFineAmount());
-            prepare.executeUpdate();
-            
-             bookService.updateBookStatus(item.getBookId(), "Borrowed");
+            prepare.setDouble(4, item.getFineAmount());
+            int rowsInserted = prepare.executeUpdate();
+            if (rowsInserted > 0) {
+            bookService.updateBookStatus(item.getBookId(), "Borrowed");
+            return true;
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }return false;
@@ -87,26 +90,24 @@ public class TransactionService extends DbConnection implements TransactionDAO<T
     }
 
     @Override
-    public void updateItem(TransactionModel item) {
-        String query = "UPDATE tbl_booktransaction SET user_id = ?, book_id = ?, borrow_date = ?, return_date = ?, fine_amount = ? WHERE transaction_id = ?";
-
+    public boolean updateTransaction(int id) {
+        String query = "UPDATE tbl_booktransaction SET return_date = CURRENT_DATE WHERE transaction_id = ?";
         try {
             connect();
+            TransactionModel transaction = getTransactionById(id);
             prepare = connect.prepareStatement(query);
+            prepare.setInt(1, id);
+            int rowsAffected = prepare.executeUpdate();
+            bookService.updateBookStatus(transaction.getBookId(), "Available");
 
-            prepare.setInt(1, item.getUserId());
-            prepare.setInt(2, item.getBookId());
-            prepare.setDate(3, item.getBorrowDate());
-            prepare.setDate(4, item.getReturnDate());
-            prepare.setDouble(5, item.getFineAmount());
-            prepare.setInt(6, item.getId());
-
-            prepare.executeUpdate();
-            bookService.updateBookStatus(item.getBookId(), "Borrowed");
+            
+            return rowsAffected > 0;
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return false;
     }
 
     @Override
@@ -115,13 +116,55 @@ public class TransactionService extends DbConnection implements TransactionDAO<T
 
         try {
             connect();
-            prepare = connect.prepareStatement(query);
+            TransactionModel item = getTransactionById(id);
 
-            prepare.setInt(1, id);
-            prepare.executeUpdate();
+            if (item != null) {
+                prepare = connect.prepareStatement(query);
+                prepare.setInt(1, id);
+                prepare.executeUpdate();
+
+                // Now mark the book as available
+                bookService.updateBookStatus(item.getBookId(), "Available");
+                return true;
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return false;
     }
+
+    @Override
+    public TransactionModel getTransactionById(int id) {
+        for (TransactionModel transaction : getAll()) {
+            if (transaction.getId()== id) {
+                return transaction;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean borrowBookTransaction(TransactionModel transaction) {
+        String query = "INSERT INTO tbl_booktransaction (user_id, book_id, borrow_date, fine_amount) VALUES (?, ?, ?, ?)";
+        
+    try {
+        connect();
+
+        prepare = connect.prepareStatement(query);
+        prepare.setInt(1, transaction.getUserId());
+        prepare.setInt(2, transaction.getBookId());
+        prepare.setDate(3, transaction.getBorrowDate());
+        prepare.setDouble(4, transaction.getFineAmount());
+        prepare.executeUpdate();
+
+        bookService.updateBookStatus(transaction.getBookId(), "Borrowed");
+        return true;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+    }
+    
 }

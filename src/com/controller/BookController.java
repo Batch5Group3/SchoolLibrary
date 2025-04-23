@@ -37,8 +37,8 @@ public class BookController {
         bookService.updateItem(item);
     }
     
-    public void updateBookStatus (int id, String status){
-        bookService.updateBookStatus(id, status);
+    public void updateBookStatus (int id, String newStatus){
+        bookService.updateBookStatus(id, newStatus);
     }
     
     public BookModel findBookById(int id) {

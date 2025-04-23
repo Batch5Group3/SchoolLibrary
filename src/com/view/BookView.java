@@ -30,10 +30,11 @@ public class BookView extends DbConnection{
             System.out.println("\t\t\t\t╚═══════════════════════╝");
             System.out.println("\t\t\t\t  [1] ➕ Add Book");
             System.out.println("\t\t\t\t  [2] 📖 Show All Books");
-            System.out.println("\t\t\t\t  [3] ✏️ Update a Book");
-            System.out.println("\t\t\t\t  [4] 🗑️ Delete Book");
-            System.out.println("\t\t\t\t  [5] 🔙 Back to Previous Menu");
-            System.out.println("\t\t\t\t  [6] ❌ Exit Program");
+            System.out.println("\t\t\t\t  [3] 🔍 Search Book");
+            System.out.println("\t\t\t\t  [4] ✏️ Update a Book");
+            System.out.println("\t\t\t\t  [5] 🗑️ Delete Book");
+            System.out.println("\t\t\t\t  [6] 🔙 Back to Previous Menu");
+            System.out.println("\t\t\t\t  [7] ❌ Exit Program");
             System.out.println("\t\t\t\t ════════════════════════");
             System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
             int choice = scanner.nextInt();
@@ -47,6 +48,9 @@ public class BookView extends DbConnection{
                     displayBook();
                     break;
                 case 3:
+                    findBookById();
+                    break;
+                case 4:
                    System.out.print("\t\t\t\tEnter the Book ID you want to update: ");
                     int updateId = scanner.nextInt();
                     scanner.nextLine(); // clear newline
@@ -60,13 +64,13 @@ public class BookView extends DbConnection{
                     }
                     waitForEnter(scanner);
                     break;
-                case 4:
+                case 5:
                     deleteBook();
                     break;
-                case 5:
+                case 6:
                     main.adminLogInMenu();
                     break;
-                case 6:
+                case 7:
                     main.exitProgram();
                     break;
                 default:
@@ -104,7 +108,7 @@ public class BookView extends DbConnection{
     
     public BookModel updateBook(BookModel existingBook) {
         System.out.println("\t\t\t\t╔═════════════════════════════════╗");
-        System.out.println("\t\t\t\t║               📖 UPDATE BOOK INFORMATION             ║");
+        System.out.println("\t\t\t\t║                 📖 UPDATE BOOK INFORMATION               ║");
         System.out.println("\t\t\t\t╚═════════════════════════════════╝");
         System.out.println(BLUE + "\t\t\t\tBook ID: " + RESET + existingBook.getId());
         System.out.println(BLUE +"\t\t\t\tCurrent Title: " + RESET + existingBook.getTitle());
@@ -149,14 +153,14 @@ public class BookView extends DbConnection{
         if (status.isEmpty()) status = existingBook.getStatus();
         
         System.out.println("\n\t\t\t\t═══════════════════════════════════");
-        System.out.println("\t\t\t\tUpdated Information: ");
+        System.out.println("\t\t\t\tUPDATED INFORMATION: ");
         System.out.println("\t\t\t\t═══════════════════════════════════");
         System.out.println(GREEN +"\t\t\t\tID: " + RESET + existingBook.getId());
         System.out.println(GREEN +"\t\t\t\tTitle: " + RESET + title);
         System.out.println(GREEN +"\t\t\t\tAuthor: " + RESET + author);
         System.out.println(GREEN +"\t\t\t\tPublished Year: " + RESET + year);
         System.out.println(GREEN +"\t\t\t\tType: " + RESET + type);
-        System.out.println(GREEN +"\t\t\tStatus: " + RESET + status);
+        System.out.println(GREEN +"\t\t\t\tStatus: " + RESET + status);
         System.out.println("\t\t\t\t═══════════════════════════════════");
         
         return new BookModel(existingBook.getId(), title, author, year, type, status);
@@ -176,7 +180,7 @@ public class BookView extends DbConnection{
             if ("Y".equalsIgnoreCase(choice)) {
                 boolean isDeleted = bookController.deleteItem(id);
                 if (isDeleted) {
-                    System.out.println("\t\t\t\t✔ Book ID " + id + " was successfully deleted!");
+                    System.out.println(GREEN+"\t\t\t\t✔ Book ID " + id + " was successfully deleted!"+RESET);
                 } else {
                     System.out.println(RED + "\t\t\t\t⚠ No book found with the specified ID."+ RESET);
                 }
@@ -192,9 +196,9 @@ public class BookView extends DbConnection{
         
             System.out.println();
             System.out.println(BLUE +"═══════════════════════════ BOOK LIST ═════════════════════════════════" + RESET);
-            System.out.println("═══════════════════════════════════════════════════════════════════");
+            System.out.println("══════════════════════════════════════════════════════════════════");
             System.out.printf("| %-5s | %-30s | %-20s | %-15s | %-30s |\n", "ID", "Title", "Author", "Published Year", "Type");
-            System.out.println("═══════════════════════════════════════════════════════════════════");
+            System.out.println("══════════════════════════════════════════════════════════════════");
             for (BookModel book : books) {
                 System.out.printf("| %-5s | %-30s | %-20s | %-15s | %-30s |\n",
                         book.getId(),
@@ -203,7 +207,7 @@ public class BookView extends DbConnection{
                         book.getPubYear(),
                         book.getType());
             }
-            System.out.println("════════════════════════════════════════════════════════════════════");
+            System.out.println("══════════════════════════════════════════════════════════════════");
             waitForEnter(scanner);
     }
     
@@ -222,17 +226,42 @@ public class BookView extends DbConnection{
                         book.getAuthor(),
                         book.getPubYear(),
                         book.getType());
-                
             }
             System.out.println("══════════════════════════════════════════════════════════════════");
-           
+    }
+    
+    public void findBookById() {
+        
+        System.out.print("\t\t\t\tEnter Book ID you want to find: ");
+        int bookId = scanner.nextInt();
+        scanner.nextLine();
+        BookModel book = bookService.getById(bookId);
+        
+        if (book != null) {
+            System.out.println("\t══════════════════════════════════════════════════════════════════");
+            System.out.println("\t                                              📘  BOOK DETAILS                             ");
+            System.out.println("\t══════════════════════════════════════════════════════════════════");
+            System.out.printf("\t| %-5s | %-30s | %-20s | %-15s | %-30s | %-10s |\n", "ID", "Title", "Author", "Year", "Type", "Status");
+            System.out.println("\t══════════════════════════════════════════════════════════════════");
+            System.out.printf("\t| %-5d | %-30s | %-20s | %-15d | %-30s | %-10s |\n", 
+                  book.getId(), 
+                  book.getTitle(), 
+                  book.getAuthor(), 
+                  book.getPubYear(), 
+                  book.getType(), 
+                  book.getStatus());
+            System.out.println("\t══════════════════════════════════════════════════════════════════");
+            waitForEnter(scanner);
+        } else {
+            System.out.println(RED + "\t\t\t\t⚠Book not found!" + RESET);
+        }
     }
     
     public void displayBorrowedBook(){
         List<BookModel> books = bookService.getBorrowedBooks();
         
             System.out.println();
-            System.out.println(BLUE +"══════════════════════════ BORROWED BOOKS ════════════════════════════════" + RESET);
+            System.out.println(BLUE +"══════════════════════════ BORROWED BOOKS ═══════════════════════════════" + RESET);
             System.out.println("══════════════════════════════════════════════════════════════════");
             System.out.printf("| %-5s | %-30s | %-20s | %-15s | %-30s |\n", "ID", "Title", "Author", "Published Year", "Type");
             System.out.println("══════════════════════════════════════════════════════════════════");

@@ -125,14 +125,15 @@ public class BookService extends DbConnection implements BookDAO<BookModel> {
     }
     
     @Override
-    public void updateBookStatus(int bookId, String status) {
+    public void updateBookStatus(int bookId, String newStatus) {
         String query = "UPDATE tbl_libbook SET book_status = ? WHERE book_id = ?";
         try {
             connect();
             prepare = connect.prepareStatement(query);
-            prepare.setString(1, status);
+            prepare.setString(1, newStatus);
             prepare.setInt(2, bookId);
             prepare.executeUpdate();
+        
         } catch (Exception e) {
             System.out.println("Error updating book status: " + e.getMessage());
         }
