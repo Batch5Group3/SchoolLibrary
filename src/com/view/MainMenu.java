@@ -15,6 +15,8 @@ public class MainMenu {
     public static final String RESET = "\u001B[0m";
     public static final String PURPLE = "\u001B[35m";
     public static final String BLUE = "\u001B[34m";
+    public static final String GREEN = "\u001B[32m";
+
     private final BookController bookController = new BookController();
     private final BookView bookView = new BookView();
     
@@ -33,20 +35,21 @@ public class MainMenu {
                 "\t\t\t\t \\ \\ /\\ / / _ \\ |/ __/ _ \\| '_ ` _ \\ / _ \\ \n" +
                 "\t\t\t\t  \\ V  V /  __/ | (_| (_) | | | | | |  __/\n" +
                 "\t\t\t\t   \\_/\\_/ \\___|_|\\___\\___/|_| |_| |_|\\___| \n" +
-                PURPLE + "\t\t\t\t   ~ SCHOOL LIBRARY MANAGEMENT SYSTEM ~\n" + RESET +
+                PURPLE + "\t\t\t\t   📖 SCHOOL LIBRARY MANAGEMENT SYSTEM 📖\n" + RESET +
                 "\t\t\t\t╔═════════════════════════╗\n" +
-                "\t\t\t\t║            🔐 ACCOUNT MENU             ║\n" +
+                "\t\t\t\t║            🔐 ACCOUNT MENU              ║\n" +
                 "\t\t\t\t╚═════════════════════════╝\n" +
                 "\t\t\t\t  [1] Log In to Your Account              \n" +
                 "\t\t\t\t  [2] Sign Up for a New Account           \n" +
                 "\t\t\t\t  [3] Exit Application                    \n" +
-                "\t\t\t\t══════════════════════════\n";
+                "\t\t\t\t ══════════════════════════\n";
         System.out.println("\n\n");
         System.out.print(welcome);
         System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
         choiceAcc = scanner.nextInt();
         switch(choiceAcc){
             case 1:
+                accountView.logInHeader();
                 accountView.loginAccount();
                 break;
             case 2: 
@@ -68,16 +71,18 @@ public class MainMenu {
         int chocieMenu; 
         String menu =
                 "\t\t\t\t╔═════════════════════════╗\n"+
-                "\t\t\t\t║          👥 ADMIN MAIN MENU            ║\n"+
+                "\t\t\t\t║            👥 ADMIN MAIN MENU           ║\n"+
                 "\t\t\t\t╚═════════════════════════╝\n"+
                 "\t\t\t\t   [1] 📚 Manage Books\n" +
                 "\t\t\t\t   [2] 👤 Manage Account\n" +
-                "\t\t\t\t   [3] 📖 View Borrowed Books\n" +
-                "\t\t\t\t   [4] 🔁 Return Books\n" +
-                "\t\t\t\t   [5] 📑 Manage Transactions\n" +
-                "\t\t\t\t   [6] 🔒 Log Out\n" +
-                "\t\t\t\t   [7] ❌ Exit\n" +
-                "\t\t\t\t   ═════════════════════════\n";
+                "\t\t\t\t   [3] 📖 View Available Books\n" +
+                "\t\t\t\t   [4] 📖 View Borrowed Books\n" +
+                "\t\t\t\t   [5] 📚 Borrow Books\n" +
+                "\t\t\t\t   [6] 🔁 Return Books\n" +
+                "\t\t\t\t   [7] 📑 Manage Transactions\n" +
+                "\t\t\t\t   [8] 🔒 Log Out\n" +
+                "\t\t\t\t   [9] ❌ Exit\n" +
+                "\t\t\t\t ════════════════════════\n";
         System.out.println("\n\n");
         System.out.print(menu);
         System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
@@ -86,21 +91,30 @@ public class MainMenu {
             
             switch (chocieMenu){
                 case 1:
-                    bookView.showMainMenu();
+                    bookView.bookMenu();
                     break;
                 case 2:
                     accountView.accountMenu();
                     break;
                 case 3:
-                    bookView.displayBorrowedBook();
+                    bookView.displayAvailableBook();
+                    accountView.waitForEnter(scanner);
+                    adminLogInMenu();
                     break;
                 case 4:
-                    transactionView.viewAllTransactions();
+                    bookView.displayBorrowedBook();
+                    adminLogInMenu();
                     break;
                 case 5:
-                    transactionView.transactionMenu();
+                    transactionView.borrowTransaction();
                     break;
                 case 6:
+                    transactionView.viewAllTransactions();//return
+                    break;
+                case 7:
+                    transactionView.transactionMenu();
+                    break;
+                case 8:
                     System.out.println("\t\t\t\tAre you sure you want to log out? "
                         + "\n\t\t\t\t[Y] Yes \n\t\t\t\t[N] No");
                     System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
@@ -114,7 +128,7 @@ public class MainMenu {
                     adminLogInMenu();
                     }
                     break;
-                case 7:
+                case 9:
                     exitProgram();
                     break;
                 default: 
@@ -176,8 +190,8 @@ public class MainMenu {
         System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
         char choice = scanner.nextLine().charAt(0);
         if (choice == 'y' || choice == 'Y') {
-            System.out.println("\n\n\n\t\t\t\tThank you for using School Library Management System!");
-            System.out.println("\t\t\t\tExiting.....");
+            System.out.println("\n\n\t\t\t\t📚 Thank you for using the School Library Management System!");
+            System.out.println("\t\t\t\t👋 Exiting the program... Have a great day!");
             System.exit(0);
             scanner.close();
         } else {

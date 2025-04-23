@@ -1,13 +1,13 @@
 
 package com.controller;
 
+import com.dao.TransactionDAO;
 import com.model.TransactionModel;
-import com.services.CrudService;
 import com.services.TransactionService;
 import java.util.List;
 
 public class TransactionController {
-    private final CrudService<TransactionModel> transactionService;
+    private final TransactionDAO<TransactionModel> transactionService;
 
     public TransactionController() {
         this.transactionService = new TransactionService();

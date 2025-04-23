@@ -2,11 +2,12 @@
 package com.services;
 
 import com.app.util.DbConnection;
+import com.dao.BookDAO;
 import com.model.BookModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookService extends DbConnection implements CrudService<BookModel> {
+public class BookService extends DbConnection implements BookDAO<BookModel> {
 
     @Override
     public boolean add(BookModel book) { 
@@ -17,17 +18,15 @@ public class BookService extends DbConnection implements CrudService<BookModel> 
         try {
             connect();
             prepare = connect.prepareStatement(query);
-
             prepare.setString(1, book.getTitle());
             prepare.setString(2, book.getAuthor());
             prepare.setInt(3, book.getPubYear());
             prepare.setString(4, book.getType());
             return prepare.executeUpdate() > 0;
-            
         } catch (Exception e) {
-            System.out.println("Error adding book: " + e.getMessage());
-            
-        }return false;
+            System.out.println("Error adding book: " + e.getMessage()); 
+        }
+        return false;
     }
 
     @Override
@@ -41,9 +40,6 @@ public class BookService extends DbConnection implements CrudService<BookModel> 
             result = state.executeQuery(query);
 
             while (result.next()) {
-                //Date sqlDate = rs.getDate("book_publication_date");
-                //LocalDate pubDate = (sqlDate != null) ? sqlDate.toLocalDate() : null;
-                
                 books.add(new BookModel(
                         result.getInt("book_id"),
                         result.getString("book_title"),
@@ -55,7 +51,6 @@ public class BookService extends DbConnection implements CrudService<BookModel> 
         } catch (Exception e) {
             System.out.println("Error retrieving books: " + e.getMessage());
         }
-
         return books;
     }
 
@@ -68,10 +63,8 @@ public class BookService extends DbConnection implements CrudService<BookModel> 
             connect();
             prepare = connect.prepareStatement(query);
             prepare.setInt(1, id);
-            
-           result = prepare.executeQuery();
-
-           if (result.next()) {
+            result = prepare.executeQuery();
+            if (result.next()) {
                existingBook = new BookModel(
                        result.getInt("book_id"),
                        result.getString("book_title"),
@@ -79,12 +72,10 @@ public class BookService extends DbConnection implements CrudService<BookModel> 
                        result.getInt("book_year_published"),
                        result.getString("book_type"),
                        result.getString("book_status"));
-               
            } else {
                System.out.println("No book found with the specified ID.");
                return null;
            }
-
        } catch (Exception e) {
            System.out.println("Error fetching book details: " + e.getMessage());
            return null;
@@ -116,26 +107,38 @@ public class BookService extends DbConnection implements CrudService<BookModel> 
         try {
             connect();
             prepare = connect.prepareStatement(query);
-              
             prepare.setString(1, book.getTitle());
             prepare.setString(2, book.getAuthor());
             prepare.setInt(3, book.getPubYear());
             prepare.setString(4, book.getType());
             prepare.setInt(5, book.getId());
-                    
-
+            
             int rowsUpdated = prepare.executeUpdate();
             if (rowsUpdated > 0) {
-                System.out.println("Book updated successfully!");
+                System.out.println("\t\t\t\t✔Book updated successfully!");
             } else {
-                System.out.println("No book found with the specified ID.");
+                System.out.println("\t\t\t\t⚠No book found with the specified ID.");
             }
-
         } catch (Exception e) {
             System.out.println("Error updating book: " + e.getMessage());
         }
     }
-
+    
+    @Override
+    public void updateBookStatus(int bookId, String status) {
+        String query = "UPDATE tbl_libbook SET book_status = ? WHERE book_id = ?";
+        try {
+            connect();
+            prepare = connect.prepareStatement(query);
+            prepare.setString(1, status);
+            prepare.setInt(2, bookId);
+            prepare.executeUpdate();
+        } catch (Exception e) {
+            System.out.println("Error updating book status: " + e.getMessage());
+        }
+    }
+    
+    
     @Override
     public List<BookModel> getAvailableBooks() {
         String query = "SELECT * FROM tbl_libbook WHERE book_status = 'Available'";
@@ -147,9 +150,6 @@ public class BookService extends DbConnection implements CrudService<BookModel> 
             result = state.executeQuery(query);
 
             while (result.next()) {
-                //Date sqlDate = rs.getDate("book_publication_date");
-                //LocalDate pubDate = (sqlDate != null) ? sqlDate.toLocalDate() : null;
-                
                 availableBooks.add(new BookModel(
                         result.getInt("book_id"),
                         result.getString("book_title"),
@@ -161,7 +161,6 @@ public class BookService extends DbConnection implements CrudService<BookModel> 
         } catch (Exception e) {
             System.out.println("Error retrieving books: " + e.getMessage());
         }
-
         return availableBooks;
     }
 
@@ -176,9 +175,6 @@ public class BookService extends DbConnection implements CrudService<BookModel> 
             result = state.executeQuery(query);
 
             while (result.next()) {
-                //Date sqlDate = rs.getDate("book_publication_date");
-                //LocalDate pubDate = (sqlDate != null) ? sqlDate.toLocalDate() : null;
-                
                 availableBooks.add(new BookModel(
                         result.getInt("book_id"),
                         result.getString("book_title"),
@@ -190,9 +186,8 @@ public class BookService extends DbConnection implements CrudService<BookModel> 
         } catch (Exception e) {
             System.out.println("Error retrieving books: " + e.getMessage());
         }
-
         return availableBooks;
     }
-    
+
     
 }

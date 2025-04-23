@@ -9,7 +9,7 @@ public class TransactionModel {
     private int bookId;
     private Date borrowDate;    
     private Date returnDate; 
-    private int fineAmount;
+    private double fineAmount;
 
     public TransactionModel(int id, int userId, int bookId, Date borrowDate, Date returnDate, int fineAmount) {
         this.id = id;
@@ -63,7 +63,7 @@ public class TransactionModel {
         this.returnDate = returnDate;
     }
 
-    public int getFineAmount() {
+    public double getFineAmount() {
         return fineAmount;
     }
 

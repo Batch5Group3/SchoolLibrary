@@ -13,27 +13,28 @@ import java.util.Scanner;
 public class BookView extends DbConnection{
     public static final String RED = "\033[1;31m";
     public static final String BLUE = "\u001B[34m";
+    public static final String GREEN = "\u001B[32m";
     public static final String RESET = "\033[0m";
     Scanner scanner = new Scanner(System.in);
     private final BookService bookService = new BookService();
     private final BookController bookController = new BookController();
     BookModel bookModel = new BookModel();
 
-    public void showMainMenu() throws SQLException {
+    public void bookMenu() throws SQLException {
         MainMenu main = new MainMenu();
         
         boolean show = true;
         while (show) {
-            System.out.println("\t\t\t\t╔════════════════════════╗");
-            System.out.println("\t\t\t\t║             📚 BOOKS MENU 📚          ║");
-            System.out.println("\t\t\t\t╚════════════════════════╝");
+            System.out.println("\t\t\t\t╔═══════════════════════╗");
+            System.out.println("\t\t\t\t║          📚 BOOKS MENU 📚            ║");
+            System.out.println("\t\t\t\t╚═══════════════════════╝");
             System.out.println("\t\t\t\t  [1] ➕ Add Book");
             System.out.println("\t\t\t\t  [2] 📖 Show All Books");
             System.out.println("\t\t\t\t  [3] ✏️ Update a Book");
             System.out.println("\t\t\t\t  [4] 🗑️ Delete Book");
             System.out.println("\t\t\t\t  [5] 🔙 Back to Previous Menu");
             System.out.println("\t\t\t\t  [6] ❌ Exit Program");
-            System.out.println("\t\t\t\t═════════════════════════");
+            System.out.println("\t\t\t\t ════════════════════════");
             System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -57,6 +58,7 @@ public class BookView extends DbConnection{
                     } else {
                         showMessage(RED +"\t\t\t\tBook with ID " + updateId + " not found." + RESET);
                     }
+                    waitForEnter(scanner);
                     break;
                 case 4:
                     deleteBook();
@@ -69,7 +71,7 @@ public class BookView extends DbConnection{
                     break;
                 default:
                     System.out.println(RED + "\t\t\t\t⚠ Invalid choice. Please enter a number from the menu." + RESET);
-                    showMainMenu();
+                    bookMenu();
                     break;
             }
         }
@@ -101,23 +103,23 @@ public class BookView extends DbConnection{
     }
     
     public BookModel updateBook(BookModel existingBook) {
-        System.out.println("\nt\t\t\t╔═══════════════════════════════╗");
-        System.out.println("\t\t\t\t║             📖 UPDATE BOOK INFORMATION           ║");
-        System.out.println("t\t\t\t╚═══════════════════════════════╝");
-        System.out.println("\t\t\t\tBook ID: " + existingBook.getId());
-        System.out.println("\t\t\t\tCurrent Title: " + existingBook.getTitle());
-        System.out.println("\t\t\t\tCurrent Author: " + existingBook.getAuthor());
-        System.out.println("\t\t\t\tCurrent Published Year: " + existingBook.getPubYear());
-        System.out.println("\t\t\t\tCurrent Type: " + existingBook.getType());
-        System.out.println("\t\t\tCurrent Status: " + existingBook.getStatus());
-        System.out.println("\t\t\t\t══════════════════════════════════");
-        System.out.print("\t\t\t\tEnter new title (leave blank to keep \"" + existingBook.getTitle() + "\"): ");
+        System.out.println("\t\t\t\t╔═════════════════════════════════╗");
+        System.out.println("\t\t\t\t║               📖 UPDATE BOOK INFORMATION             ║");
+        System.out.println("\t\t\t\t╚═════════════════════════════════╝");
+        System.out.println(BLUE + "\t\t\t\tBook ID: " + RESET + existingBook.getId());
+        System.out.println(BLUE +"\t\t\t\tCurrent Title: " + RESET + existingBook.getTitle());
+        System.out.println(BLUE +"\t\t\t\tCurrent Author: " + RESET + existingBook.getAuthor());
+        System.out.println(BLUE +"\t\t\t\tCurrent Published Year: " + RESET + existingBook.getPubYear());
+        System.out.println(BLUE +"\t\t\t\tCurrent Type: " + RESET + existingBook.getType());
+        System.out.println(BLUE +"\t\t\t\tCurrent Status: " + RESET + existingBook.getStatus());
+        System.out.println("\t\t\t\t═══════════════════════════════════");
+        System.out.print("\n\t\t\t\tEnter new title (press Enter to keep \"" + existingBook.getTitle() + "\"): ");
         String title = scanner.nextLine();
         if (title.isEmpty()) {
             title = existingBook.getTitle();
         }
         
-        System.out.print("\t\t\t\tEnter new author (leave blank to keep \"" + existingBook.getAuthor() + "\"): ");
+        System.out.print("\t\t\t\tEnter new author (press Enter to keep \"" + existingBook.getAuthor() + "\"): ");
         String author = scanner.nextLine();
         if (author.isEmpty()) {
             author = existingBook.getAuthor();
@@ -136,30 +138,28 @@ public class BookView extends DbConnection{
             year = existingBook.getPubYear();
         }
 
-        System.out.print("\t\t\t\tEnter new type (leave blank to keep \"" + existingBook.getType() + "\"): ");
+        System.out.print("\t\t\t\tEnter new type (press Enter to keep \"" + existingBook.getType() + "\"): ");
         String type = scanner.nextLine();
         if (type.isEmpty()) {
             type = existingBook.getType();
         }
         
-        System.out.print("\t\t\tEnter new Status (leave blank to keep current): ");
+        System.out.print("\t\t\t\tEnter new Status (press Enter to keep current): ");
         String status = scanner.nextLine();
         if (status.isEmpty()) status = existingBook.getStatus();
         
-        System.out.println("\n\t\t\t\t═════════════════════════════════════════");
+        System.out.println("\n\t\t\t\t═══════════════════════════════════");
         System.out.println("\t\t\t\tUpdated Information: ");
-        System.out.println("\t\t\t\t════════════════════════════════════════════");
-        System.out.println("\t\t\t\tID: " + existingBook.getId());
-        System.out.println("\t\t\t\tTitle: " + title);
-        System.out.println("\t\t\t\tAuthor: " + author);
-        System.out.println("\t\t\t\tPublished Year: " + year);
-        System.out.println("\t\t\t\tType: " + type);
-        System.out.println("\t\t\tStatus:            " + status);
-        System.out.println("\t\t\t\t════════════════════════════════════════════");
+        System.out.println("\t\t\t\t═══════════════════════════════════");
+        System.out.println(GREEN +"\t\t\t\tID: " + RESET + existingBook.getId());
+        System.out.println(GREEN +"\t\t\t\tTitle: " + RESET + title);
+        System.out.println(GREEN +"\t\t\t\tAuthor: " + RESET + author);
+        System.out.println(GREEN +"\t\t\t\tPublished Year: " + RESET + year);
+        System.out.println(GREEN +"\t\t\t\tType: " + RESET + type);
+        System.out.println(GREEN +"\t\t\tStatus: " + RESET + status);
+        System.out.println("\t\t\t\t═══════════════════════════════════");
         
-        waitForEnter(scanner);
         return new BookModel(existingBook.getId(), title, author, year, type, status);
-        
     }
     
     public void deleteBook() throws SQLException{
@@ -167,7 +167,7 @@ public class BookView extends DbConnection{
         int id = scanner.nextInt();
         scanner.nextLine();
         
-        try {
+        
             System.out.println("\n\t\t\t\tAre you sure you want to delete Book ID " + id + "?");
             System.out.println("\t\t\t\t[Y] Yes\n\t\t\t\t[N] No");
             System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
@@ -183,23 +183,18 @@ public class BookView extends DbConnection{
             } else {
                 System.out.println(RED + "\t\t\t\t❌ Delete canceled." + RESET);
             }
-        } catch (Exception e) {
-            System.out.println("\t\t\t\tFailed to delete " + e);
-        }
         waitForEnter(scanner);
-        showMainMenu();
-        
+        bookMenu();
     }
     
     public void displayBook() {
         List<BookModel> books = bookService.getAll();
         
-        try {
             System.out.println();
-            System.out.println("\033[1;34m══════════════════════════════ BOOK LIST ════════════════════════════════════\033[0m");
-            System.out.println("═════════════════════════════════════════════════════════════════════════");
+            System.out.println(BLUE +"═══════════════════════════ BOOK LIST ═════════════════════════════════" + RESET);
+            System.out.println("═══════════════════════════════════════════════════════════════════");
             System.out.printf("| %-5s | %-30s | %-20s | %-15s | %-30s |\n", "ID", "Title", "Author", "Published Year", "Type");
-            System.out.println("═════════════════════════════════════════════════════════════════════════");
+            System.out.println("═══════════════════════════════════════════════════════════════════");
             for (BookModel book : books) {
                 System.out.printf("| %-5s | %-30s | %-20s | %-15s | %-30s |\n",
                         book.getId(),
@@ -208,23 +203,18 @@ public class BookView extends DbConnection{
                         book.getPubYear(),
                         book.getType());
             }
-            System.out.println("══════════════════════════════════════════════════════════════════════════");
+            System.out.println("════════════════════════════════════════════════════════════════════");
             waitForEnter(scanner);
-                
-        } catch (Exception e) {
-            System.out.println("\t\t\t\tFailed " + e);
-        } 
     }
     
     public void displayAvailableBook(){
         List<BookModel> books = bookService.getAvailableBooks();
         
-        try {
             System.out.println();
-            System.out.println("\033[1;34m══════════════════════════════ AVAILABLE BOOKS ════════════════════════════════════\033[0m");
-            System.out.println("═════════════════════════════════════════════════════════════════════════");
+            System.out.println(BLUE +"═════════════════════════ AVAILABLE BOOKS ═══════════════════════════════" + RESET);
+            System.out.println("══════════════════════════════════════════════════════════════════");
             System.out.printf("| %-5s | %-30s | %-20s | %-15s | %-30s |\n", "ID", "Title", "Author", "Published Year", "Type");
-            System.out.println("═════════════════════════════════════════════════════════════════════════");
+            System.out.println("══════════════════════════════════════════════════════════════════");
             for (BookModel book : books) {
                 System.out.printf("| %-5s | %-30s | %-20s | %-15s | %-30s |\n",
                         book.getId(),
@@ -234,23 +224,18 @@ public class BookView extends DbConnection{
                         book.getType());
                 
             }
-            System.out.println("══════════════════════════════════════════════════════════════════════════");
-            waitForEnter(scanner);
-                
-        } catch (Exception e) {
-            System.out.println("\t\t\t\tFailed " + e);
-        } 
+            System.out.println("══════════════════════════════════════════════════════════════════");
+           
     }
     
     public void displayBorrowedBook(){
         List<BookModel> books = bookService.getBorrowedBooks();
         
-        try {
             System.out.println();
-            System.out.println("\033[1;34m══════════════════════════════ BORROWED BOOKS ════════════════════════════════════\033[0m");
-            System.out.println("═════════════════════════════════════════════════════════════════════════");
+            System.out.println(BLUE +"══════════════════════════ BORROWED BOOKS ════════════════════════════════" + RESET);
+            System.out.println("══════════════════════════════════════════════════════════════════");
             System.out.printf("| %-5s | %-30s | %-20s | %-15s | %-30s |\n", "ID", "Title", "Author", "Published Year", "Type");
-            System.out.println("═════════════════════════════════════════════════════════════════════════");
+            System.out.println("══════════════════════════════════════════════════════════════════");
             for (BookModel book : books) {
                 System.out.printf("| %-5s | %-30s | %-20s | %-15s | %-30s |\n",
                         book.getId(),
@@ -260,18 +245,16 @@ public class BookView extends DbConnection{
                         book.getType());
                 
             }
-            System.out.println("══════════════════════════════════════════════════════════════════════════");
+            System.out.println("══════════════════════════════════════════════════════════════════");
             waitForEnter(scanner);
-                
-        } catch (Exception e) {
-            System.out.println("\t\t\t\tFailed " + e);
-        } 
     }
     
     public static void waitForEnter(Scanner sc) {
         System.out.print("\n\t\t\t\tPress Enter to return...");
         sc.nextLine();
     }
+    
+    
     public void showMessage(String message) {
         System.out.println(message);
     }

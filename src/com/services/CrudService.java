@@ -13,5 +13,6 @@ public interface CrudService<T> {
     List<T> getBorrowedBooks();
     T getById(int id); // Read
     void updateItem(T id); // Update
+    void updateBookStatus(int id, String status);
     boolean deleteItem(int id); // Delete
 }

@@ -2,12 +2,13 @@
 package com.services;
 
 import com.app.util.DbConnection;
+import com.dao.TransactionDAO;
 import com.model.TransactionModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TransactionService extends DbConnection implements CrudService<TransactionModel> {
-    
+public class TransactionService extends DbConnection implements TransactionDAO<TransactionModel> {
+    private final BookService bookService = new BookService();  
     @Override
     public boolean add(TransactionModel item) {
         String query = "INSERT INTO tbl_booktransaction (user_id, book_id, borrow_date, return_date, fine_amount) VALUES (?, ?, ?, ?, ?)";
@@ -22,8 +23,9 @@ public class TransactionService extends DbConnection implements CrudService<Tran
             prepare.setDate(3, item.getBorrowDate());
             prepare.setDate(4, item.getReturnDate());
             prepare.setDouble(5, item.getFineAmount());
-
             prepare.executeUpdate();
+            
+             bookService.updateBookStatus(item.getBookId(), "Borrowed");
         } catch (Exception e) {
             e.printStackTrace();
         }return false;
@@ -96,10 +98,12 @@ public class TransactionService extends DbConnection implements CrudService<Tran
             prepare.setInt(2, item.getBookId());
             prepare.setDate(3, item.getBorrowDate());
             prepare.setDate(4, item.getReturnDate());
-            prepare.setInt(5, item.getFineAmount());
+            prepare.setDouble(5, item.getFineAmount());
             prepare.setInt(6, item.getId());
 
             prepare.executeUpdate();
+            bookService.updateBookStatus(item.getBookId(), "Borrowed");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -119,15 +123,5 @@ public class TransactionService extends DbConnection implements CrudService<Tran
             e.printStackTrace();
         }
         return false;
-    }
-
-    @Override
-    public List<TransactionModel> getAvailableBooks() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public List<TransactionModel> getBorrowedBooks() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

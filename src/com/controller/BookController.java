@@ -1,6 +1,7 @@
 
 package com.controller;
 
+import com.dao.BookDAO;
 import com.model.BookModel;
 import com.services.BookService;
 import java.util.List;
@@ -9,8 +10,11 @@ import java.util.List;
 // has no direct input or output
 public class BookController {
     // Utilizes the CrudService interface and injected with the Book model class
-    private final BookService bookService = new BookService();
+    private final BookDAO<BookModel> bookService;
     
+    public BookController() {
+        this.bookService = new BookService();
+    }
     // Read
     public List<BookModel> showAllBooks() {
         return bookService.getAll();
@@ -31,6 +35,10 @@ public class BookController {
     
     public void updateBook(BookModel item) {
         bookService.updateItem(item);
+    }
+    
+    public void updateBookStatus (int id, String status){
+        bookService.updateBookStatus(id, status);
     }
     
     public BookModel findBookById(int id) {
