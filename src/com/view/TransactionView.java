@@ -130,6 +130,21 @@ public class TransactionView extends DbConnection{
         System.out.print("\n\t\t\t\tEnter Transaction ID: ");
         int transactionId = scanner.nextInt();
         scanner.nextLine();
+        
+        TransactionModel selectedTransaction = transactionService.getTransactionById(transactionId);
+        if (selectedTransaction == null) {
+            System.out.println(RED + "\t\t\t\t❌ Transaction not found." + RESET);
+            waitForEnter(scanner);
+            main.adminLogInMenu();
+            return;
+        }
+
+        if (selectedTransaction.getReturnDate() != null) {
+            System.out.println(RED + "\t\t\t\t❌ This book was already returned on " + selectedTransaction.getReturnDate() + "." + RESET);
+            waitForEnter(scanner);
+            main.adminLogInMenu();
+            return;
+        }
 
         double fine = transactionController.previewFineAmount(transactionId);
         System.out.println("\t\t\t\tFine (if returned today): ₱" + fine);

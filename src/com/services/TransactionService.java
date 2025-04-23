@@ -99,9 +99,13 @@ public class TransactionService extends DbConnection implements TransactionDAO<T
             connect();
 
             TransactionModel transaction = getTransactionById(id);
-            if (transaction == null) 
+            if (transaction == null) {
                 return false;
-
+            }
+            if (transaction.getReturnDate() != null) {
+                System.out.println("\t\t\t\tThis book was already returned on " + transaction.getReturnDate());
+                return false;
+            }
             prepare = connect.prepareStatement(query);
             prepare.setDouble(1, fineAmount);
             prepare.setInt(2, id);

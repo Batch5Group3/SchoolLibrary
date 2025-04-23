@@ -216,8 +216,8 @@ public class MainMenu {
             if (choice == 'y' || choice == 'Y') {
                 System.out.println("\n\n\t\t\t\t📚 Thank you for using the School Library Management System!");
                 System.out.println("\t\t\t\t👋 Have a great day! Exiting the program...");
-                scanner.close();
                 System.exit(0);
+                scanner.close();
             } else {
                 System.out.println(RED+"\n\t\t\t\t❌ Exit canceled.\n\n\n"+RESET);
                 welcomeMessage();
@@ -226,6 +226,7 @@ public class MainMenu {
             System.out.println(RED + "\n\t\t\t⚠ Invalid input. Please enter Y or N.\n" + RESET);
             exitProgram();
         }
+        
     }
     
    public static void clearScreen() {
