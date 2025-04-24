@@ -19,7 +19,6 @@ public class MainMenu {
     public static final String BLUE = "\u001B[34m";
     public static final String GREEN = "\u001B[32m";
 
-    private final BookController bookController = new BookController();
     private final BookView bookView = new BookView();
     
     public static void main(String[] args) throws SQLException {
