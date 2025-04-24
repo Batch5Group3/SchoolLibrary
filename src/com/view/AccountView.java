@@ -87,11 +87,11 @@ public class AccountView extends DbConnection {
             System.out.println();
             System.out.println(BLUE +"════════════════════════════ ACCOUNT LIST ═══════════════════════════════════" + RESET);
             System.out.println("═══════════════════════════════════════════════════════════════════════");
-            System.out.printf("| %-5s | %-15s | %-15s | %-12s | %-12s | %-20s | %-15s | %-6s |\n",
+            System.out.printf("| %-5s | %-12s | %-12s | %-20s | %-15s | %-6s |\n",
                 "ID", "First Name", "Last Name", "Address", "Contact No", "Admin");
             System.out.println("═══════════════════════════════════════════════════════════════════════");
             for (AccountModel acc : accounts) {
-                System.out.printf("| %-5d | %-15s | %-15s | %-12s | %-12s | %-20s | %-15s | %-6s |\n",
+                System.out.printf("| %-5d | %-12s | %-12s | %-20s | %-15s | %-6s |\n",
                         acc.getId(),
                         acc.getFirstName(),
                         acc.getLastName(),
