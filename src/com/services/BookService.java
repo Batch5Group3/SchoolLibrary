@@ -112,7 +112,7 @@ public class BookService extends DbConnection implements BookDAO<BookModel> {
             
             int rowsUpdated = prepare.executeUpdate();
             if (rowsUpdated > 0) {
-                System.out.println("\t\t\t\t✔Book updated successfully!");
+                System.out.println("\t\t\t\t✔ Book updated successfully!");
             } 
         } catch (Exception e) {
             System.out.println("Error updating book: " + e.getMessage());

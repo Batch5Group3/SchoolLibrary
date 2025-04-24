@@ -28,7 +28,7 @@ public class TransactionView extends DbConnection{
     public void transactionMenu() throws SQLException {
         int choice;
         System.out.println("\t\t\t\t╔═════════════════════════╗");
-        System.out.println("\t\t\t\t║           📝 MANAGE TRANSACTIONS           ║");
+        System.out.println("\t\t\t\t║\t\t📝 MANAGE TRANSACTIONS\t   ║");
         System.out.println("\t\t\t\t╚═════════════════════════╝");
         System.out.println("\t\t\t\t   [1] 📄 View All Transactions");
         System.out.println("\t\t\t\t   [2] 🔍 Search Transaction");
@@ -169,9 +169,9 @@ public class TransactionView extends DbConnection{
 }
     
     public void borrowBookTransaction() throws SQLException {
-        System.out.println("\t\t\t\t╔═════════════════════════════╗");
-        System.out.println("\t\t\t\t║\t\t  📚 BORROW A BOOK\t\t\t║");
-        System.out.println("\t\t\t\t╚═════════════════════════════╝");
+        System.out.println("\t\t\t\t╔════════════════════════════╗");
+        System.out.println("\t\t\t\t║\t\t  📚 BORROW A BOOK\t\t║");
+        System.out.println("\t\t\t\t╚════════════════════════════╝");
 
         System.out.print("\t\t\t\tEnter User ID: ");
         int userId = scanner.nextInt();
