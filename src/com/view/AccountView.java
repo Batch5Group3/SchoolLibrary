@@ -85,11 +85,11 @@ public class AccountView extends DbConnection {
             List<AccountModel> accounts = accountService.getAllAccounts();
             
             System.out.println();
-            System.out.println(BLUE +"════════════════════════════ ACCOUNT LIST ═══════════════════════════════════" + RESET);
-            System.out.println("═══════════════════════════════════════════════════════════════════════");
+      System.out.println(BLUE +"═══════════════════ ACCOUNT LIST ══════════════════════════" + RESET);
+            System.out.println("══════════════════════════════════════════════════════");
             System.out.printf("| %-5s | %-12s | %-12s | %-20s | %-15s | %-6s |\n",
                 "ID", "First Name", "Last Name", "Address", "Contact No", "Admin");
-            System.out.println("═══════════════════════════════════════════════════════════════════════");
+            System.out.println("══════════════════════════════════════════════════════");
             for (AccountModel acc : accounts) {
                 System.out.printf("| %-5d | %-12s | %-12s | %-20s | %-15s | %-6s |\n",
                         acc.getId(),
@@ -99,7 +99,7 @@ public class AccountView extends DbConnection {
                         acc.getContactNo(),
                         acc.isAdmin() ? "Yes" : "No");
             }
-            System.out.println("═══════════════════════════════════════════════════════════════════════");
+            System.out.println("══════════════════════════════════════════════════════");
             waitForEnter(sc);
             accountMenu();
     }
@@ -159,7 +159,7 @@ public class AccountView extends DbConnection {
         System.out.print("\t\t\t\tEnter first name you want to search: ");
         String searchName = sc.nextLine().toLowerCase();
         if (searchName.isEmpty()) {
-            System.out.println(RED + "\t\t\t\t⚠ Search term cannot be empty. Please try again." + RESET);
+            System.out.println(RED + "\t\t\t\t⚠ Search cannot be empty. Please try again." + RESET);
             searchAccount();
             return;
         }
@@ -186,7 +186,7 @@ public class AccountView extends DbConnection {
                 accountMenu();
                 
             } else {
-                System.out.println(RED + "\t\t\t\t⚠No User Found! Please try again." + RESET);
+                System.out.println(RED + "\t\t\t\t⚠ No User Found! Please try again." + RESET);
                 waitForEnter(sc);
                 searchAccount();
             }
@@ -256,10 +256,10 @@ public class AccountView extends DbConnection {
                         accModel.setIsAdmin(isAdmin);
                         break;
                     } else{
-                        System.out.println(RED + "\t\t\t\tInvalid Input. Please Try Again." + RESET);
+                        System.out.println(RED + "\t\t\t\t❌ Invalid Input. Please Try Again." + RESET);
                     }
                     } else {
-                        System.out.println(RED + "\t\t\t\tInvalid Input. Please Try Again." + RESET);
+                        System.out.println(RED + "\t\t\t\t❌ Invalid Input. Please Try Again." + RESET);
                         sc.nextLine(); 
                     }
                 }
@@ -294,7 +294,7 @@ public class AccountView extends DbConnection {
                 return;
         }
         accountService.updateAccount(id, fieldName, newInfo);
-        System.out.println(GREEN + "\t\t\t\tUpdated Successfully!" + RESET);
+        System.out.println(GREEN + "\t\t\t\t✔ Updated Successfully!" + RESET);
         waitForEnter(sc);
         accountMenu();
     }
@@ -304,17 +304,17 @@ public class AccountView extends DbConnection {
         System.out.print("\t\t\t\tEnter User ID you want to delete: ");
         int id = sc.nextInt();
         sc.nextLine();
-            
+        
             System.out.println("\t\t\t\tAre you sure you want to delete User ID " + id + "?");
             System.out.println("\t\t\t\t[Y] Yes\n\t\t\t\t[N] No");
             System.out.print("\t\t\t\tEnter choice: ");
             String choice = sc.nextLine();
             if ("Y".equalsIgnoreCase(choice)) {
                 accountService.deleteAccount(id);
-                System.out.println("\t\t\t\tUser ID " + id + " is successfully deleted!");
+                System.out.println("\t\t\t\t✔ User ID " + id + " is successfully deleted!");
                 
             } else {
-                System.out.println(RED+"\t\t\t\tDelete canceled."+RESET);
+                System.out.println(RED+"\t\t\t\t❌ Delete canceled."+RESET);
             }
         waitForEnter(sc);
         accountMenu();

@@ -203,10 +203,10 @@ public class BookView extends DbConnection{
         List<BookModel> books = bookService.getAll();
         
             System.out.println();
-            System.out.println(BLUE +"═══════════════════════════ BOOK LIST ═════════════════════════════════" + RESET);
-            System.out.println("══════════════════════════════════════════════════════════════════");
+            System.out.println(BLUE +"═══════════════════════════ BOOK LIST ═════════════════════════════════════" + RESET);
+            System.out.println("══════════════════════════════════════════════════════════════════════");
             System.out.printf("| %-5s | %-30s | %-20s | %-15s | %-30s |\n", "ID", "Title", "Author", "Published Year", "Type");
-            System.out.println("══════════════════════════════════════════════════════════════════");
+            System.out.println("══════════════════════════════════════════════════════════════════════");
             for (BookModel book : books) {
                 System.out.printf("| %-5s | %-30s | %-20s | %-15s | %-30s |\n",
                         book.getId(),
@@ -215,7 +215,7 @@ public class BookView extends DbConnection{
                         book.getPubYear(),
                         book.getType());
             }
-            System.out.println("══════════════════════════════════════════════════════════════════");
+            System.out.println("══════════════════════════════════════════════════════════════════════");
             waitForEnter(scanner);
     }
     

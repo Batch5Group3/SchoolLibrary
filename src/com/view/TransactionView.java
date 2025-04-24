@@ -169,7 +169,6 @@ public class TransactionView extends DbConnection{
 }
     
     public void borrowBookTransaction() throws SQLException {
-        BookService bookService = new BookService();
         System.out.println("\t\t\t\t╔═════════════════════════════╗");
         System.out.println("\t\t\t\t║                 📚 BORROW A BOOK                 ║");
         System.out.println("\t\t\t\t╚═════════════════════════════╝");
@@ -181,26 +180,25 @@ public class TransactionView extends DbConnection{
         System.out.print("\t\t\t\tEnter the Book ID you want to borrow: ");
         int bookId = scanner.nextInt();
         scanner.nextLine();
-
-        System.out.print("\t\t\t\tEnter Borrow Date (yyyy-mm-dd): ");
-        String borrowDateStr = scanner.nextLine();
-        System.out.println("\t\t\t\t═══════════════════════════════");
-
-        BookModel book = bookService.getById(bookId);
-        
-        if (book == null || !book.getStatus().equalsIgnoreCase("Available")) {
-            System.out.println("\t\t\t\t⚠ Book is not available for borrowing.");
-            return;
+        Date borrowDate = null;
+        while (borrowDate == null) {
+            System.out.print("\t\t\t\tEnter Borrow Date (yyyy-mm-dd): ");
+            String borrowDateStr = scanner.nextLine();
+            try {
+                borrowDate = Date.valueOf(borrowDateStr);
+            } catch (IllegalArgumentException e) {
+                System.out.println(RED+"\t\t\t\t❌ Invalid date format! Please enter date in yyyy-mm-dd format."+RESET);
+            }
         }
-        
         transaction.setUserId(userId);
         transaction.setBookId(bookId);
-        transaction.setBorrowDate(Date.valueOf(borrowDateStr));
+        transaction.setBorrowDate((borrowDate));
         transaction.setReturnDate(null);
         transaction.setFineAmount(0);
         
+        System.out.println("\t\t\t\t═══════════════════════════════");
+       
         boolean success = transactionService.borrowBookTransaction(transaction);
-        
         if (success) {
             System.out.println(GREEN+"\n\t\t\t\t📖 Book Borrowed Successfully!"+RESET);
             System.out.println("\t\t\t\t════════════════════════════════");
@@ -230,10 +228,10 @@ public class TransactionView extends DbConnection{
             String choice = scanner.nextLine();
             if ("Y".equalsIgnoreCase(choice)) {
                 transactionService.deleteItem(id);
-                System.out.println("\t\t\t\tTransaction ID " + id + " is successfully deleted!");
+                System.out.println(GREEN+"\n\t\t\t\t✔ Transaction ID " + id + " is successfully deleted!"+RESET);
 
             } else {
-                System.out.println(RED+"\t\t\t\tDelete canceled."+RESET);
+                System.out.println(RED+"\t\t\t\t❌ Delete canceled."+RESET);
             }
         }else {
             System.out.println(RED+"\t\t\t\t⚠ Transaction not found."+RESET);
