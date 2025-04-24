@@ -1,13 +1,7 @@
 
 package com.view;
 
-import com.controller.BookController;
-import com.controller.TransactionController;
-import com.model.BookModel;
-import com.model.TransactionModel;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 
