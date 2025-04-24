@@ -170,7 +170,7 @@ public class TransactionView extends DbConnection{
     
     public void borrowBookTransaction() throws SQLException {
         System.out.println("\t\t\t\t╔═════════════════════════════╗");
-        System.out.println("\t\t\t\t║                 📚 BORROW A BOOK                 ║");
+        System.out.println("\t\t\t\t║\t\t  📚 BORROW A BOOK\t\t\t║");
         System.out.println("\t\t\t\t╚═════════════════════════════╝");
 
         System.out.print("\t\t\t\tEnter User ID: ");

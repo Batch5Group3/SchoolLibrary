@@ -26,9 +26,9 @@ public class AccountView extends DbConnection {
     
     public void accountMenu() throws SQLException {
         System.out.println("\n\n");
-        System.out.println("\t\t\t\t╔═════════════════════════╗");
-        System.out.println("\t\t\t\t║           👥 ACCOUNT MANAGEMENT         ║");
-        System.out.println("\t\t\t\t╚═════════════════════════╝");
+        System.out.println("\t\t\t\t╔═══════════════════════╗");
+        System.out.println("\t\t\t\t║\t👥 ACCOUNT MANAGEMENT\t\t║");
+        System.out.println("\t\t\t\t╚═══════════════════════╝");
         System.out.println("\t\t\t\t  [1] 📜 List of Accounts");
         System.out.println("\t\t\t\t  [2] ✏️ Update Account");
         System.out.println("\t\t\t\t  [3] 🔍 Search Account");
@@ -36,7 +36,7 @@ public class AccountView extends DbConnection {
         System.out.println("\t\t\t\t  [5] 🔙 Back to Main Menu");
         System.out.println("\t\t\t\t  [6] 🔐 Log Out");
         System.out.println("\t\t\t\t  [7] ❌ Exit Application");
-        System.out.println("\t\t\t\t══════════════════════════");
+        System.out.println("\t\t\t\t════════════════════════");
         System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
         int choice = sc.nextInt();
         sc.nextLine();
@@ -349,9 +349,9 @@ public class AccountView extends DbConnection {
     public void logInHeader(){
         System.out.println("\n\n");
         String login = "\t\t\t\t╔═════════════════════════════╗\n" +
-                       "\t\t\t\t║         School Library Management System          ║\n" +
+                       "\t\t\t\t║\tSchool Library Management System\t  ║\n" +
                        "\t\t\t\t╠═════════════════════════════╣\n" +
-                       "\t\t\t\t║               LOGIN TO CONTINUE                   ║\n" +
+                       "\t\t\t\t║\t\tLOGIN TO CONTINUE\t\t  ║\n" +
                        "\t\t\t\t╚═════════════════════════════╝";
         System.out.println(login);
     }

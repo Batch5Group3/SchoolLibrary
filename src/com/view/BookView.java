@@ -26,7 +26,7 @@ public class BookView extends DbConnection{
         boolean show = true;
         while (show) {
             System.out.println("\t\t\t\t╔═══════════════════════╗");
-            System.out.println("\t\t\t\t║          📚 BOOKS MENU 📚            ║");
+            System.out.println("\t\t\t\t║\t\t📚 BOOKS MENU 📚\t\t║");
             System.out.println("\t\t\t\t╚═══════════════════════╝");
             System.out.println("\t\t\t\t  [1] ➕ Add Book");
             System.out.println("\t\t\t\t  [2] 📖 Show All Books");

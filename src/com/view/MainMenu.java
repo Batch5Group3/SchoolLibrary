@@ -36,13 +36,13 @@ public class MainMenu {
                 "\t\t\t\t  \\ V  V /  __/ | (_| (_) | | | | | |  __/\n" +
                 "\t\t\t\t   \\_/\\_/ \\___|_|\\___\\___/|_| |_| |_|\\___| \n" +
                 PURPLE + "\t\t\t\t   📖 SCHOOL LIBRARY MANAGEMENT SYSTEM 📖\n" + RESET +
-                "\t\t\t\t╔════════════════════════╗\n" +
-                "\t\t\t\t║            🔐 ACCOUNT MENU               ║\n" +
-                "\t\t\t\t╚════════════════════════╝\n" +
+                "\t\t\t\t╔═══════════════════════╗\n" +
+                "\t\t\t\t║\t   🔐 ACCOUNT MENU\t\t║\n" +
+                "\t\t\t\t╚═══════════════════════╝\n" +
                 "\t\t\t\t  [1] Log In to Your Account              \n" +
                 "\t\t\t\t  [2] Sign Up for a New Account           \n" +
                 "\t\t\t\t  [3] Exit Application                    \n" +
-                "\t\t\t\t ════════════════════════\n";
+                "\t\t\t\t ═══════════════════════\n";
         while (true) {
             System.out.println("\n\n");
             System.out.print(welcome);
@@ -78,7 +78,7 @@ public class MainMenu {
         int chocieMenu; 
         String menu =
                 "\t\t\t\t╔═════════════════════════╗\n"+
-                "\t\t\t\t║             👥 ADMIN MAIN MENU             ║\n"+
+                "\t\t\t\t║\t\t👥 ADMIN MAIN MENU\t   ║\n"+
                 "\t\t\t\t╚═════════════════════════╝\n"+
                 "\t\t\t\t   [1] 📚 Manage Books\n" +
                 "\t\t\t\t   [2] 👤 Manage Account\n" +
@@ -150,7 +150,7 @@ public class MainMenu {
     public void userLoginMenu() throws SQLException{
         System.out.println("\n\n");
         System.out.println("\t\t\t\t╔═════════════════════╗");
-        System.out.println("\t\t\t\t║         📚 BORROWER MAIN MENU       ║");
+        System.out.println("\t\t\t\t║\t📚 BORROWER MAIN MENU\t     ║");
         System.out.println("\t\t\t\t╚═════════════════════╝");
         System.out.println("\t\t\t\t  [1] 🔍 Check Book Availability");
         System.out.println("\t\t\t\t  [2] 📖 Book List");
