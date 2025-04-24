@@ -159,6 +159,7 @@ public class MainMenu {
             case 1:
                 bookView.displayAvailableBook();
                 borrowChoice();
+                userLoginMenu();
                 break;
             case 2:
                 bookView.displayBook();

@@ -174,7 +174,7 @@ public class TransactionView extends DbConnection{
         System.out.println("\t\t\t\t║                 📚 BORROW A BOOK                 ║");
         System.out.println("\t\t\t\t╚═════════════════════════════╝");
 
-        System.out.print("\t\t\t\tEnter your User ID: ");
+        System.out.print("\t\t\t\tEnter User ID: ");
         int userId = scanner.nextInt();
         scanner.nextLine(); 
         
@@ -215,7 +215,6 @@ public class TransactionView extends DbConnection{
             System.out.println("\t\t\t\t❌ Failed to borrow book. Please check book availability or try again.");
         }
         waitForEnter(scanner);
-        main.userLoginMenu();
     }
 
     public void deleteTransaction() throws SQLException {

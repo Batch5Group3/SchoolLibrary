@@ -160,25 +160,28 @@ public class AccountView extends DbConnection {
         System.out.println("\n\n");
         System.out.print("\t\t\t\tEnter first name you want to search: ");
         String searchName = sc.nextLine().toLowerCase();
-        System.out.println("════════════════════════════════════════════════════════════════════════════════");
-        System.out.printf("| %-5s | %-15s | %-15s | %-12s | %-12s | %-20s | %-15s | %-6s |\n",
-        "ID", "Username", "Password", "First Name", "Last Name", "Address", "Contact No", "Admin");
-        System.out.println("════════════════════════════════════════════════════════════════════════════════");
+        if (searchName.isEmpty()) {
+            System.out.println(RED + "\t\t\t\t⚠ Search term cannot be empty. Please try again." + RESET);
+            searchAccount();
+            return;
+        }
+        System.out.println("══════════════════════════════════════════════════════");
+        System.out.printf("| %-5s | %-12s | %-12s | %-20s | %-15s | %-6s |\n",
+        "ID", "First Name", "Last Name", "Address", "Contact No", "Admin");
+        System.out.println("══════════════════════════════════════════════════════");
         
             List<AccountModel> search = accountService.getByFirstName(searchName);
         
             if (search != null && !search.isEmpty()) {
                 for (AccountModel acc : search) {
-                System.out.printf("| %-5d | %-15s | %-15s | %-12s | %-12s | %-20s | %-15s | %-6s |\n",
+                System.out.printf("| %-5d | %-12s | %-12s | %-20s | %-15s | %-6s |\n",
                         acc.getId(),
-                        acc.getUserName(),
-                        acc.getPass(),
                         acc.getFirstName(),
                         acc.getLastName(),
                         acc.getAddress(),
                         acc.getContactNo(),
                         acc.isAdmin() ? "Yes" : "No");
-                System.out.println("════════════════════════════════════════════════════════════════════════════════");
+                System.out.println("══════════════════════════════════════════════════");
 
             }
                 waitForEnter(sc);

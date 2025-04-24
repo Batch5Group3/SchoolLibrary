@@ -82,17 +82,17 @@ public class BookView extends DbConnection{
     }
     
     public BookModel addBook() throws SQLException {
-        System.out.println("t\t\t\t╔═══════════════════════════════╗");
-        System.out.println("t\t\t\t║                  📘 ADD NEW BOOK                ║");
-        System.out.println("t\t\t\t╚═══════════════════════════════╝");
-        System.out.print("\t\t\t\tEnter Title           : ");
+        System.out.println("\t\t\t\t╔═══════════════════════════════╗");
+        System.out.println("\t\t\t\t║                  📘 ADD NEW BOOK                ║");
+        System.out.println("\t\t\t\t╚═══════════════════════════════╝");
+        System.out.print("\t\t\t\tEnter Title          : ");
         bookModel.setTitle(scanner.nextLine());
-        System.out.print("\t\t\t\tEnter Author          : ");
+        System.out.print("\t\t\t\tEnter Author         : ");
         bookModel.setAuthor(scanner.nextLine());
-        System.out.print("\t\t\t\tEnter Year Published  : ");
+        System.out.print("\t\t\t\tEnter Year Published : ");
         bookModel.setPubYear(scanner.nextInt());
         scanner.nextLine();
-        System.out.print("\t\t\t\tEnter Type/Genre      : ");
+        System.out.print("\t\t\t\tEnter Type/Genre     : ");
         bookModel.setType(scanner.nextLine());
         
         if (bookModel.getTitle().isEmpty() || bookModel.getAuthor().isEmpty() || bookModel.getType().isEmpty()) {
@@ -167,12 +167,14 @@ public class BookView extends DbConnection{
     }
     
     public void deleteBook() throws SQLException{
+        BookModel book = bookController.findBookById(0);
         System.out.print("\n\t\t\t\tEnter Book ID you want to delete: ");
         int id = scanner.nextInt();
         scanner.nextLine();
         
         
-            System.out.println("\n\t\t\t\tAre you sure you want to delete Book ID " + id + "?");
+            System.out.println("\n\t\t\t\tAre you sure you want to delete Book ID " + id);
+            System.out.println("("+book.getTitle()+")?");
             System.out.println("\t\t\t\t[Y] Yes\n\t\t\t\t[N] No");
             System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
             String choice = scanner.nextLine();
