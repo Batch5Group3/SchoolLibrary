@@ -29,7 +29,6 @@ public class MainMenu {
     public void welcomeMessage() throws SQLException{
         
         AccountView accountView = new AccountView();
-        int choiceAcc;
         String welcome =
                 "\t\t\t\t__        __   _                            \n" +
                 "\t\t\t\t\\ \\      / /__| | ___ ___  _ __ ___   ___  \n" +
@@ -44,27 +43,34 @@ public class MainMenu {
                 "\t\t\t\t  [2] Sign Up for a New Account           \n" +
                 "\t\t\t\t  [3] Exit Application                    \n" +
                 "\t\t\t\t ════════════════════════\n";
-        System.out.println("\n\n");
-        System.out.print(welcome);
-        System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
-        choiceAcc = scanner.nextInt();
-        scanner.nextLine();
-        switch(choiceAcc){
-            case 1:
-                accountView.logInHeader();
-                accountView.loginAccount();
-                break;
-            case 2: 
-                accountView.addAccount();
-                break;
-            case 3:
-                exitProgram();
-                break;
-            default:
-              System.out.println("\t\t\t\t⚠ Invalid choice. Please enter a number from the menu.");
-              break;
+        while (true) {
+            System.out.println("\n\n");
+            System.out.print(welcome);
+            System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
+            String input = scanner.nextLine();
+
+            if (!input.matches("\\d+")) {
+                System.out.println(RED + "\t\t\t\t⚠ Invalid input! Please enter a number (1-3)." + RESET);
+                continue;
+            }
+            int choiceAcc = Integer.parseInt(input);
+            switch(choiceAcc){
+                case 1:
+                    accountView.logInHeader();
+                    accountView.loginAccount();
+                    break;
+                case 2: 
+                    accountView.addAccount();
+                    break;
+                case 3:
+                    exitProgram();
+                    break;
+                default:
+                  System.out.println("\t\t\t\t⚠ Invalid choice. Please enter a number from the menu.");
+                  break;
+            }
         }
-    } 
+    }
         
     public void adminLogInMenu() throws SQLException{
         AccountView accountView = new AccountView();

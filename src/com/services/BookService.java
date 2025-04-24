@@ -72,9 +72,6 @@ public class BookService extends DbConnection implements BookDAO<BookModel> {
                        result.getInt("book_year_published"),
                        result.getString("book_type"),
                        result.getString("book_status"));
-           } else {
-               System.out.println("No book found with the specified ID.");
-               return null;
            }
        } catch (Exception e) {
            System.out.println("Error fetching book details: " + e.getMessage());
@@ -116,9 +113,7 @@ public class BookService extends DbConnection implements BookDAO<BookModel> {
             int rowsUpdated = prepare.executeUpdate();
             if (rowsUpdated > 0) {
                 System.out.println("\t\t\t\t✔Book updated successfully!");
-            } else {
-                System.out.println("\t\t\t\t⚠No book found with the specified ID.");
-            }
+            } 
         } catch (Exception e) {
             System.out.println("Error updating book: " + e.getMessage());
         }

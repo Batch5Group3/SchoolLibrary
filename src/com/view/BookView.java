@@ -60,7 +60,7 @@ public class BookView extends DbConnection{
                         BookModel updated = updateBook(existing); // call the view method
                         bookController.updateBook(updated); // pass to controller
                     } else {
-                        showMessage(RED +"\t\t\t\tBook with ID " + updateId + " not found." + RESET);
+                        showMessage(RED +"\t\t\t\t⚠ Book with ID " + updateId + " not found." + RESET);
                     }
                     waitForEnter(scanner);
                     break;
@@ -167,14 +167,20 @@ public class BookView extends DbConnection{
     }
     
     public void deleteBook() throws SQLException{
-        BookModel book = bookController.findBookById(0);
+        
         System.out.print("\n\t\t\t\tEnter Book ID you want to delete: ");
         int id = scanner.nextInt();
         scanner.nextLine();
         
-        
+        BookModel book = bookController.findBookById(id);
+        if (book == null) {
+            System.out.println(RED + "\t\t\t\t⚠ No book found with the specified ID." + RESET);
+            waitForEnter(scanner);
+            bookMenu();
+            return;
+        }
             System.out.println("\n\t\t\t\tAre you sure you want to delete Book ID " + id);
-            System.out.println("("+book.getTitle()+")?");
+            System.out.println("\t\t\t\t("+BLUE +book.getTitle()+RESET+")?");
             System.out.println("\t\t\t\t[Y] Yes\n\t\t\t\t[N] No");
             System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
             String choice = scanner.nextLine();
@@ -240,11 +246,11 @@ public class BookView extends DbConnection{
         BookModel book = bookService.getById(bookId);
         
         if (book != null) {
-            System.out.println("═════════════════════════════════════════════════════════════════════════");
+            System.out.println("══════════════════════════════════════════════════════════════════════════════");
             System.out.println("                                                  📘  BOOK DETAILS                             ");
-            System.out.println("═════════════════════════════════════════════════════════════════════════");
+            System.out.println("══════════════════════════════════════════════════════════════════════════════");
             System.out.printf("| %-5s | %-30s | %-20s | %-15s | %-30s | %-10s |\n", "ID", "Title", "Author", "Year", "Type", "Status");
-            System.out.println("═════════════════════════════════════════════════════════════════════════");
+            System.out.println("══════════════════════════════════════════════════════════════════════════════");
             System.out.printf("| %-5d | %-30s | %-20s | %-15d | %-30s | %-10s |\n", 
                   book.getId(), 
                   book.getTitle(), 
@@ -252,10 +258,10 @@ public class BookView extends DbConnection{
                   book.getPubYear(), 
                   book.getType(), 
                   book.getStatus());
-            System.out.println("═════════════════════════════════════════════════════════════════════════");
+            System.out.println("══════════════════════════════════════════════════════════════════════════════");
             waitForEnter(scanner);
         } else {
-            System.out.println(RED + "\t\t\t\t⚠Book not found!" + RESET);
+            System.out.println(RED + "\t\t\t\tNo book found with the specified ID to update!" + RESET);
         }
     }
     
