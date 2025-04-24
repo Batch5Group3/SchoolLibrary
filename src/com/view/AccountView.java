@@ -27,7 +27,7 @@ public class AccountView extends DbConnection {
     public void accountMenu() throws SQLException {
         System.out.println("\n\n");
         System.out.println("\t\t\t\t╔═════════════════════════╗");
-        System.out.println("\t\t\t\t║            👥 ACCOUNT MANAGEMENT           ║");
+        System.out.println("\t\t\t\t║           👥 ACCOUNT MANAGEMENT         ║");
         System.out.println("\t\t\t\t╚═════════════════════════╝");
         System.out.println("\t\t\t\t  [1] 📜 List of Accounts");
         System.out.println("\t\t\t\t  [2] ✏️ Update Account");
@@ -88,13 +88,11 @@ public class AccountView extends DbConnection {
             System.out.println(BLUE +"════════════════════════════ ACCOUNT LIST ═══════════════════════════════════" + RESET);
             System.out.println("═══════════════════════════════════════════════════════════════════════");
             System.out.printf("| %-5s | %-15s | %-15s | %-12s | %-12s | %-20s | %-15s | %-6s |\n",
-                "ID", "Username", "Password", "First Name", "Last Name", "Address", "Contact No", "Admin");
+                "ID", "First Name", "Last Name", "Address", "Contact No", "Admin");
             System.out.println("═══════════════════════════════════════════════════════════════════════");
             for (AccountModel acc : accounts) {
                 System.out.printf("| %-5d | %-15s | %-15s | %-12s | %-12s | %-20s | %-15s | %-6s |\n",
                         acc.getId(),
-                        acc.getUserName(),
-                        acc.getPass(),
                         acc.getFirstName(),
                         acc.getLastName(),
                         acc.getAddress(),
@@ -181,7 +179,7 @@ public class AccountView extends DbConnection {
                         acc.getAddress(),
                         acc.getContactNo(),
                         acc.isAdmin() ? "Yes" : "No");
-                System.out.println("══════════════════════════════════════════════════");
+        System.out.println("══════════════════════════════════════════════════════");
 
             }
                 waitForEnter(sc);

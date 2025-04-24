@@ -222,17 +222,24 @@ public class TransactionView extends DbConnection{
         int id = scanner.nextInt();
         scanner.nextLine();
         
-        System.out.println("\t\t\t\tAre you sure you want to delete Transaction ID " + id + "?");
-        System.out.println("\t\t\t\t[Y] Yes\n\t\t\t\t[N] No");
-        System.out.print("\t\t\t\tEnter choice: ");
-        String choice = scanner.nextLine();
-        if ("Y".equalsIgnoreCase(choice)) {
-            transactionService.deleteItem(id);
-            System.out.println("\t\t\t\tTransaction ID " + id + " is successfully deleted!");
+        TransactionModel t = transactionController.findTransactionById(id);
+        if (t != null) {
+            System.out.println("\t\t\t\tAre you sure you want to delete Transaction ID " + id + "?");
+            System.out.println("\t\t\t\t[Y] Yes\n\t\t\t\t[N] No");
+            System.out.print("\t\t\t\tEnter choice: ");
+            String choice = scanner.nextLine();
+            if ("Y".equalsIgnoreCase(choice)) {
+                transactionService.deleteItem(id);
+                System.out.println("\t\t\t\tTransaction ID " + id + " is successfully deleted!");
 
-        } else {
-            System.out.println(RED+"\t\t\t\tDelete canceled."+RESET);
+            } else {
+                System.out.println(RED+"\t\t\t\tDelete canceled."+RESET);
+            }
+        }else {
+            System.out.println(RED+"\t\t\t\t⚠ Transaction not found."+RESET);
+
         }
+ 
         waitForEnter(scanner);
         transactionMenu();
     }
