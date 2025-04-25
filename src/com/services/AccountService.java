@@ -32,13 +32,7 @@ public class AccountService extends DbConnection implements AccountDAO {
             }
         } catch (SQLException e) {
             System.out.println("AccountService: getAllAccounts() " + e.getMessage());
-        } finally {
-            try {
-                connect.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(AccountService.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        } 
         return accounts;
     }
     
@@ -62,8 +56,6 @@ public class AccountService extends DbConnection implements AccountDAO {
             prepare.executeUpdate();
         } catch (SQLException e) {
             System.out.println("AccountService: addAccount()" + e.getMessage());
-        } finally {
-            connect.close();
         }
     }
     
@@ -92,12 +84,6 @@ public class AccountService extends DbConnection implements AccountDAO {
            }
         } catch (SQLException e) {
             System.out.println("AccountService: getByFirstName() " + e.getMessage());
-        } finally {
-        try {
-            connect.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(AccountService.class.getName()).log(Level.SEVERE, null, ex);
-        }
         } 
         return accounts;
     }
@@ -115,12 +101,6 @@ public class AccountService extends DbConnection implements AccountDAO {
             
         } catch (Exception e) {
             System.out.println("AccountService: updateAccount()" + e.getMessage());
-        }  finally{
-            try {
-                connect.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(AccountService.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
 
@@ -136,8 +116,6 @@ public class AccountService extends DbConnection implements AccountDAO {
             
         } catch (SQLException e) {
             System.out.println("AccountService: deleteAccount()" + e.getMessage());
-        } finally {
-            connect.close();
         }
     }
 
@@ -159,12 +137,6 @@ public class AccountService extends DbConnection implements AccountDAO {
             }
         } catch (SQLException e) {
             System.out.println("AccountService: getUserByCredentials() " + e.getMessage());
-        } finally {
-            try {
-                connect.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(AccountService.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
         return null;
     }
@@ -182,12 +154,6 @@ public class AccountService extends DbConnection implements AccountDAO {
             
         } catch (SQLException e) {
             System.out.println("AccountService: isUsernameTaken() " + e.getMessage());
-        } finally {
-            try {
-                connect.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(AccountService.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
         return false;
     }

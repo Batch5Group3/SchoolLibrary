@@ -27,13 +27,7 @@ public class BookService extends DbConnection implements BookDAO<BookModel> {
             return prepare.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println("BookService: add() " + e.getMessage()); 
-        } finally {
-             try {
-                 connect.close();
-             } catch (SQLException ex) {
-                 Logger.getLogger(BookService.class.getName()).log(Level.SEVERE, null, ex);
-             }
-        }
+        } 
         return false;
     }
 
@@ -58,13 +52,7 @@ public class BookService extends DbConnection implements BookDAO<BookModel> {
             }
         } catch (SQLException e) {
             System.out.println("BookService: getAll() s" + e.getMessage());
-        } finally {
-            try {
-                connect.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(BookService.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        } 
         return books;
     }
 
@@ -89,13 +77,7 @@ public class BookService extends DbConnection implements BookDAO<BookModel> {
        } catch (SQLException e) {
            System.out.println("BookService: getById() " + e.getMessage());
            return null;
-       } finally {
-           try {
-               connect.close();
-           } catch (SQLException ex) {
-               Logger.getLogger(BookService.class.getName()).log(Level.SEVERE, null, ex);
-           }
-        }
+       } 
        return existingBook;
     }
 
@@ -111,12 +93,6 @@ public class BookService extends DbConnection implements BookDAO<BookModel> {
         
         } catch (SQLException e) {
         System.out.println("BookService: deleteItem() " + e.getMessage());
-        } finally {
-            try {
-                connect.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(BookService.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
         return false;
     }
@@ -139,12 +115,6 @@ public class BookService extends DbConnection implements BookDAO<BookModel> {
             } 
         } catch (SQLException e) {
             System.out.println("BookService: updateItem() " + e.getMessage());
-        } finally {
-            try {
-                connect.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(BookService.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
     
@@ -160,13 +130,7 @@ public class BookService extends DbConnection implements BookDAO<BookModel> {
         
         } catch (SQLException e) {
             System.out.println("BookService: updateBookStatus() " + e.getMessage());
-        } finally {
-            try {
-                connect.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(BookService.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        } 
     }
     
     @Override
@@ -189,12 +153,6 @@ public class BookService extends DbConnection implements BookDAO<BookModel> {
             }
         } catch (SQLException e) {
             System.out.println("BookService: getAvailableBooks() " + e.getMessage());
-        } finally {
-            try {
-                connect.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(BookService.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
         return availableBooks;
     }
@@ -219,13 +177,7 @@ public class BookService extends DbConnection implements BookDAO<BookModel> {
             }
         } catch (SQLException e) {
             System.out.println("BookService: getBorrowedBooks() " + e.getMessage());
-        } finally {
-            try {
-                connect.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(BookService.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        } 
         return availableBooks;
     }
 }

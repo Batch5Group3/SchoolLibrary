@@ -9,8 +9,6 @@ import java.sql.SQLException;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class TransactionService extends DbConnection implements TransactionDAO<TransactionModel> {
     private final BookService bookService = new BookService();  
@@ -31,16 +29,9 @@ public class TransactionService extends DbConnection implements TransactionDAO<T
                 bookService.updateBookStatus(item.getBookId(), "Borrowed");
                 return true;
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.out.println("TransactionService: add() " + e.getMessage());
-        } finally {
-            try {
-                connect.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(TransactionService.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return false;
+        }return false;
     }
 
     @Override
@@ -61,14 +52,8 @@ public class TransactionService extends DbConnection implements TransactionDAO<T
                         result.getInt("fine_amount"));
                 transactions.add(transaction);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.out.println("TransactionService: getAll() " + e.getMessage());
-        } finally {
-            try {
-                connect.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(TransactionService.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
         return transactions;
     }
@@ -92,14 +77,8 @@ public class TransactionService extends DbConnection implements TransactionDAO<T
                         result.getDate("return_date"),
                         result.getInt("fine_amount"));
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.out.println("TransactionService: getById() " + e.getMessage());
-        } finally {
-            try {
-                connect.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(TransactionService.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
         return transaction;
     }
@@ -123,14 +102,8 @@ public class TransactionService extends DbConnection implements TransactionDAO<T
             if (rowsAffected > 0) {
                 bookService.updateBookStatus(transaction.getBookId(), "Available");
                 return true; }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.out.println("TransactionService: returnBookTransaction() " + e.getMessage());
-        } finally {
-            try {
-                connect.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(TransactionService.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
         return false;
     }
@@ -148,14 +121,8 @@ public class TransactionService extends DbConnection implements TransactionDAO<T
                 prepare.executeUpdate();
                 bookService.updateBookStatus(item.getBookId(), "Available");
                 return true; }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.out.println("TransactionService: deleteItem() " + e.getMessage());
-        } finally {
-            try {
-                connect.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(TransactionService.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
         return false;
     }
@@ -184,16 +151,9 @@ public class TransactionService extends DbConnection implements TransactionDAO<T
             prepare.executeUpdate();
             bookService.updateBookStatus(transaction.getBookId(), "Borrowed");
             return true;
-            
         } catch (SQLException e) {
             System.out.println("TransactionService: borrowBookTransaction() " + e.getMessage());
             return false;
-        } finally {
-            try {
-                connect.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(TransactionService.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
 
