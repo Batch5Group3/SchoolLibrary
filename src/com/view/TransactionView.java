@@ -3,27 +3,25 @@ package com.view;
 
 import com.app.util.DbConnection;
 import com.controller.TransactionController;
-import com.model.BookModel;
 import com.model.TransactionModel;
-import com.services.BookService;
 import com.services.TransactionService;
-import static com.view.MainMenu.BLUE;
-import static com.view.MainMenu.RESET;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
 public class TransactionView extends DbConnection{
-    public static final String RED = "\033[1;31m";
-    public static final String BLUE = "\u001B[34m";
-    public static final String GREEN = "\u001B[32m";
-    public static final String RESET = "\033[0m";
     Scanner scanner = new Scanner(System.in);
     private final TransactionModel transaction = new TransactionModel();
     private final TransactionService transactionService = new TransactionService();
     private final TransactionController transactionController = new TransactionController();
     private final MainMenu main = new MainMenu();
+    
+    public static final String RED = "\033[1;31m";
+    public static final String BLUE = "\u001B[34m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String RESET = "\033[0m";
+    
 
     public void transactionMenu() throws SQLException {
         int choice;
@@ -37,7 +35,7 @@ public class TransactionView extends DbConnection{
         System.out.println("\t\t\t\t ══════════════════════════");
         System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
         choice = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+        scanner.nextLine();
 
         switch (choice) {
             case 1:
@@ -88,19 +86,18 @@ public class TransactionView extends DbConnection{
         TransactionModel t = transactionController.findTransactionById(id);
         if (t != null) {
             System.out.println(BLUE +"\n════════════════════ TRANSACTION DETAILS ═════════════════════"+ RESET);
-        System.out.println("═════════════════════════════════════════════════════");
-        System.out.printf("| %-13s | %-10s | %-10s | %-15s | %-15s | %-10s |\n",
-                "Transaction ID", "User ID", "Book ID", "Borrow Date", "Return Date", "Fine");
-        System.out.println("═════════════════════════════════════════════════════");
-        System.out.printf("| %-14d | %-10d | %-10d | %-15s | %-15s | ₱%-9.2f |\n",
-                t.getId(),
-                t.getUserId(),
-                t.getBookId(),
-                t.getBorrowDate(),
-                t.getReturnDate() != null ? t.getReturnDate() : "Not returned",
-                t.getFineAmount());
-        
-        System.out.println("═════════════════════════════════════════════════════");
+            System.out.println("═════════════════════════════════════════════════════");
+            System.out.printf("| %-13s | %-10s | %-10s | %-15s | %-15s | %-10s |\n",
+                    "Transaction ID", "User ID", "Book ID", "Borrow Date", "Return Date", "Fine");
+            System.out.println("═════════════════════════════════════════════════════");
+            System.out.printf("| %-14d | %-10d | %-10d | %-15s | %-15s | ₱%-9.2f |\n",
+                    t.getId(),
+                    t.getUserId(),
+                    t.getBookId(),
+                    t.getBorrowDate(),
+                    t.getReturnDate() != null ? t.getReturnDate() : "Not returned",
+                    t.getFineAmount());
+            System.out.println("═════════════════════════════════════════════════════");
         } else {
             System.out.println(RED+"\t\t\t\t⚠ Transaction not found."+RESET);
         }
@@ -145,10 +142,9 @@ public class TransactionView extends DbConnection{
             main.adminLogInMenu();
             return;
         }
-
+        
         double fine = transactionController.previewFineAmount(transactionId);
         System.out.println("\t\t\t\tFine (if returned today): ₱" + fine);
-
         System.out.print("\t\t\t\tConfirm return?");
         System.out.println("\n\t\t\t\t[Y] Yes\n\t\t\t\t[N] No");
         System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
@@ -163,7 +159,6 @@ public class TransactionView extends DbConnection{
         } else {
             System.out.println("\t\t\t\t❌ Return cancelled.");
         }
-
         waitForEnter(scanner);
         main.adminLogInMenu();
 }
@@ -195,7 +190,6 @@ public class TransactionView extends DbConnection{
         transaction.setBorrowDate((borrowDate));
         transaction.setReturnDate(null);
         transaction.setFineAmount(0);
-        
         System.out.println("\t\t\t\t═══════════════════════════════");
        
         boolean success = transactionService.borrowBookTransaction(transaction);
@@ -235,13 +229,10 @@ public class TransactionView extends DbConnection{
             }
         }else {
             System.out.println(RED+"\t\t\t\t⚠ Transaction not found."+RESET);
-
         }
- 
         waitForEnter(scanner);
         transactionMenu();
     }
-
     
     public static void waitForEnter(Scanner sc) {
         System.out.print("\n\t\t\t\tPress Enter to return...");

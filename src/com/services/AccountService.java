@@ -3,12 +3,11 @@ package com.services;
 import com.model.AccountModel;
 import com.app.util.DbConnection;
 import com.dao.AccountDAO;
-import com.view.AccountView;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AccountService extends DbConnection implements AccountDAO {
     
@@ -21,7 +20,6 @@ public class AccountService extends DbConnection implements AccountDAO {
             connect();
             state = connect.createStatement();
             result = state.executeQuery(query);
-            
             while (result.next()) {
                 accounts.add(new AccountModel(result.getInt("user_id"),
                         result.getString("user_name"),
@@ -32,8 +30,14 @@ public class AccountService extends DbConnection implements AccountDAO {
                         result.getString("user_contact_no"),
                         result.getBoolean("user_is_admin")));
             }
-        } catch (Exception e) {
-            System.out.println("Error retrieving account: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("AccountService: getAllAccounts() " + e.getMessage());
+        } finally {
+            try {
+                connect.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountService.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return accounts;
     }
@@ -56,8 +60,8 @@ public class AccountService extends DbConnection implements AccountDAO {
             prepare.setBoolean(7, account.isAdmin());
             
             prepare.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (SQLException e) {
+            System.out.println("AccountService: addAccount()" + e.getMessage());
         } finally {
             connect.close();
         }
@@ -86,9 +90,16 @@ public class AccountService extends DbConnection implements AccountDAO {
                 accModel.setPass(result.getString("user_pass"));
                 accounts.add(accModel);
            }
-        } catch (Exception e) {
-            System.out.println(e);
-        } return accounts;
+        } catch (SQLException e) {
+            System.out.println("AccountService: getByFirstName() " + e.getMessage());
+        } finally {
+        try {
+            connect.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(AccountService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        } 
+        return accounts;
     }
 
     @Override
@@ -97,37 +108,41 @@ public class AccountService extends DbConnection implements AccountDAO {
         
         try {
             connect();
-            // execute query
             prepare = connect.prepareStatement(query);
             prepare.setString(1, newInfo);
             prepare.setInt(2, id);
-            
             prepare.executeUpdate();
             
         } catch (Exception e) {
-            System.out.println("\t\t\t\tUpdate Failed " + e);
-        } 
+            System.out.println("AccountService: updateAccount()" + e.getMessage());
+        }  finally{
+            try {
+                connect.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountService.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     @Override
     public void deleteAccount(int id) throws SQLException{
         String query = "DELETE FROM tbl_account WHERE user_id = ?";
             
-        try {connect();
-                prepare = connect.prepareStatement(query);
-                prepare.setInt(1, id);
-                prepare.executeUpdate();
-                
-        } catch (Exception e) {
-            System.out.println("\t\t\t\tFailed to delete " + e);
-        } 
-        
+        try {
+            connect();
+            prepare = connect.prepareStatement(query);
+            prepare.setInt(1, id);
+            prepare.executeUpdate();
+            
+        } catch (SQLException e) {
+            System.out.println("AccountService: deleteAccount()" + e.getMessage());
+        } finally {
+            connect.close();
+        }
     }
-    
 
     @Override
     public AccountModel getUserByCredentials(String userName, String password) {
-        
         String query = "SELECT * FROM tbl_account WHERE user_name = ? AND user_pass = ?";
         
         try  {
@@ -135,17 +150,21 @@ public class AccountService extends DbConnection implements AccountDAO {
             prepare = connect.prepareStatement(query);
             prepare.setString(1, userName);
             prepare.setString(2, password);
-
             result = prepare.executeQuery();
-
             if (result.next()) {
                 return new AccountModel(
                         result.getString("user_name"),
                         result.getString("user_pass"), 
                         result.getBoolean("user_is_Admin"));
             }
-        } catch (Exception e) {
-            System.out.println("\t\t\t\tError fetching user: " + e.getMessage());
+        } catch (SQLException e) {
+            System.out.println("AccountService: getUserByCredentials() " + e.getMessage());
+        } finally {
+            try {
+                connect.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountService.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return null;
     }
@@ -153,13 +172,22 @@ public class AccountService extends DbConnection implements AccountDAO {
     @Override
     public boolean isUsernameTaken(String userName) {
         String query = "SELECT user_name FROM tbl_account WHERE user_name = ?";
+        
         try {
             connect();
             prepare = connect.prepareStatement(query);
             prepare.setString(1, userName);
             result = prepare.executeQuery();
             return result.next();
-        } catch (Exception e) {
+            
+        } catch (SQLException e) {
+            System.out.println("AccountService: isUsernameTaken() " + e.getMessage());
+        } finally {
+            try {
+                connect.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(AccountService.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return false;
     }

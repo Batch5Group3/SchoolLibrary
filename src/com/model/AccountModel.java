@@ -12,13 +12,13 @@ public class AccountModel {
     private String contactNo;
     private boolean isAdmin;
 
+    public AccountModel() {
+    }
+    
     public AccountModel(String userName, String password, boolean isAdmin) {
         this.userName = userName;
         this.password = password;
         this.isAdmin = isAdmin;
-    }
-
-    public AccountModel() {
     }
 
      public AccountModel(int usrId, String userName, String password, String firstName, String lastName, String address, String contactNo, boolean isAdmin) {
@@ -100,6 +100,4 @@ public class AccountModel {
     public String toString() {
         return "AccountModel{" + "id=" + id + ", userName=" + userName + ", password=" + password + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", contactNo=" + contactNo + ", isAdmin=" + isAdmin + '}';
     }
-    
-    
 }

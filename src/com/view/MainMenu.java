@@ -7,20 +7,21 @@ import java.util.Scanner;
 
 public class MainMenu {
     Scanner scanner = new Scanner(System.in);
+    private final BookView bookView = new BookView();
+    
     public static final String RED = "\033[1;31m";
     public static final String RESET = "\u001B[0m";
     public static final String PURPLE = "\u001B[35m";
     public static final String BLUE = "\u001B[34m";
     public static final String GREEN = "\u001B[32m";
 
-    private final BookView bookView = new BookView();
     
     public static void main(String[] args) throws SQLException {
         MainMenu main = new MainMenu();
         main.welcomeMessage();
     }
+    
     public void welcomeMessage() throws SQLException{
-        
         AccountView accountView = new AccountView();
         String welcome =
                 "\t\t\t\t__        __   _                            \n" +
@@ -36,6 +37,7 @@ public class MainMenu {
                 "\t\t\t\t  [2] Sign Up for a New Account           \n" +
                 "\t\t\t\t  [3] Exit Application                    \n" +
                 "\t\t\t\t ═══════════════════════\n";
+        
         while (true) {
             System.out.println("\n\n");
             System.out.print(welcome);
@@ -49,7 +51,7 @@ public class MainMenu {
             int choiceAcc = Integer.parseInt(input);
             switch(choiceAcc){
                 case 1:
-                    accountView.logInHeader();
+                    accountView.loginHeader();
                     accountView.loginAccount();
                     break;
                 case 2: 
@@ -59,7 +61,7 @@ public class MainMenu {
                     exitProgram();
                     break;
                 default:
-                  System.out.println("\t\t\t\t⚠ Invalid choice. Please enter a number from the menu.");
+                  System.out.println(RED+"\n\t\t\t\t⚠ Invalid choice. Please enter a number from the menu."+RESET);
                   break;
             }
         }
@@ -118,7 +120,7 @@ public class MainMenu {
                     break;
                 case 8:
                     System.out.println("\t\t\t\tAre you sure you want to log out? "
-                        + "\n\t\t\t\t[Y] Yes \n\t\t\t\t[N] No");
+                            + "\n\t\t\t\t[Y] Yes \n\t\t\t\t[N] No");
                     System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
                     char choice = scanner.nextLine().charAt(0);
                     if (choice == 'y' || choice == 'Y') {
@@ -126,9 +128,9 @@ public class MainMenu {
                         System.out.println("\t\t\t\t👋 See you next time!\n");
                         welcomeMessage();
                     } else {
-                    System.out.println(RED+"\n\t\t\t\t❌ Logout failed."+RESET);
-                    bookView.waitForEnter(scanner);
-                    adminLogInMenu();
+                        System.out.println(RED+"\n\t\t\t\t❌ Logout failed."+RESET);
+                        bookView.waitForEnter(scanner);
+                        adminLogInMenu();
                     }
                     break;
                 case 9:
@@ -141,8 +143,7 @@ public class MainMenu {
     }
     
     public void userLoginMenu() throws SQLException{
-        System.out.println("\n\n");
-        System.out.println("\t\t\t\t╔═════════════════════╗");
+        System.out.println("\n\n\t\t\t\t╔═════════════════════╗");
         System.out.println("\t\t\t\t║\t📚 BORROWER MAIN MENU\t     ║");
         System.out.println("\t\t\t\t╚═════════════════════╝");
         System.out.println("\t\t\t\t  [1] 🔍 Check Book Availability");
@@ -166,7 +167,7 @@ public class MainMenu {
                 break;
             case 3:
                 System.out.println("\t\t\t\tAre you sure you want to exit? "
-                    + "\n\t\t\t\t[Y] Yes \n\t\t\t\t[N] No");
+                        + "\n\t\t\t\t[Y] Yes \n\t\t\t\t[N] No");
                 System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
                 char userChoice = scanner.nextLine().charAt(0);
                 if (userChoice == 'y' || userChoice == 'Y') {
@@ -187,23 +188,24 @@ public class MainMenu {
                 break;       
         }
     }
-        public void borrowChoice() throws SQLException{
-            TransactionView transactionView = new TransactionView();
-            System.out.println("\n\n\t\t\t\t  [1] 📖 Borrow Book");
-            System.out.println("\t\t\t\t  [2] 🔙 Back");
-            System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-            switch (choice) {
-                case 1:
-                    transactionView.borrowBookTransaction();
-                    break;
-                case 2:
-                     userLoginMenu();
-                    break;
-                default:
-                    System.out.println("Invalid option.");
-            }
+    
+    public void borrowChoice() throws SQLException{
+        TransactionView transactionView = new TransactionView();
+        System.out.println("\n\n\t\t\t\t  [1] 📖 Borrow Book");
+        System.out.println("\t\t\t\t  [2] 🔙 Back");
+        System.out.print(BLUE + "\t\t\t\tPlease enter your choice: " + RESET);
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        switch (choice) {
+            case 1:
+                transactionView.borrowBookTransaction();
+                break;
+            case 2:
+                 userLoginMenu();
+                break;
+            default:
+                System.out.println(RED+ "\t\t\t\t⚠ Invalid option."+RESET);
+        }
     }
     
     public void exitProgram() throws SQLException{
@@ -226,10 +228,6 @@ public class MainMenu {
             System.out.println(RED + "\n\t\t\t⚠ Invalid input. Please enter Y or N.\n" + RESET);
             exitProgram();
         }
-        
     }
-    
-   public static void clearScreen() {
-    for (int i = 0; i < 50; ++i) System.out.println();
-   }
 }
+

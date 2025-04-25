@@ -9,13 +9,12 @@ import java.util.List;
 // The controller class handles the logic and coordination between View and Model classes
 // has no direct input or output
 public class BookController {
-    // Utilizes the CrudService interface and injected with the Book model class
     private final BookDAO<BookModel> bookService;
     
     public BookController() {
         this.bookService = new BookService();
     }
-    // Read
+    
     public List<BookModel> showAllBooks() {
         return bookService.getAll();
     }
@@ -28,7 +27,6 @@ public class BookController {
         return bookService.getBorrowedBooks();
     }
     
-    // Create
     public void addBook(BookModel book) {
         bookService.add(book);
     }

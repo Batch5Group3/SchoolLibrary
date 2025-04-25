@@ -70,5 +70,4 @@ public class TransactionModel {
     public void setFineAmount(int fineAmount) {
         this.fineAmount = fineAmount;
     }
-    
 }

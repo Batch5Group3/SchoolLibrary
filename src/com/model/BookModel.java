@@ -22,8 +22,6 @@ public class BookModel {
         this.status = status;
     }
     
-    
-    
     public int getId() {
         return id;
     }
@@ -71,6 +69,4 @@ public class BookModel {
     public void setStatus(String status) {
         this.status = status;
     }
-    
-    
 }

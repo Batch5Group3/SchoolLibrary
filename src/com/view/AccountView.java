@@ -82,79 +82,75 @@ public class AccountView extends DbConnection {
     }
     
     public void displayAccount() throws SQLException {
-            List<AccountModel> accounts = accountService.getAllAccounts();
-            
-            System.out.println();
-      System.out.println(BLUE +"═══════════════════ ACCOUNT LIST ══════════════════════════" + RESET);
-            System.out.println("══════════════════════════════════════════════════════");
-            System.out.printf("| %-5s | %-12s | %-12s | %-20s | %-15s | %-6s |\n",
-                "ID", "First Name", "Last Name", "Address", "Contact No", "Admin");
-            System.out.println("══════════════════════════════════════════════════════");
-            for (AccountModel acc : accounts) {
-                System.out.printf("| %-5d | %-12s | %-12s | %-20s | %-15s | %-6s |\n",
-                        acc.getId(),
-                        acc.getFirstName(),
-                        acc.getLastName(),
-                        acc.getAddress(),
-                        acc.getContactNo(),
-                        acc.isAdmin() ? "Yes" : "No");
-            }
-            System.out.println("══════════════════════════════════════════════════════");
-            waitForEnter(sc);
-            accountMenu();
+        List<AccountModel> accounts = accountService.getAllAccounts();
+        System.out.println();
+        System.out.println(BLUE +"═══════════════════ ACCOUNT LIST ══════════════════════════" + RESET);
+        System.out.println("══════════════════════════════════════════════════════");
+        System.out.printf("| %-5s | %-12s | %-12s | %-20s | %-15s | %-6s |\n",
+            "ID", "First Name", "Last Name", "Address", "Contact No", "Admin");
+        System.out.println("══════════════════════════════════════════════════════");
+        for (AccountModel acc : accounts) {
+            System.out.printf("| %-5d | %-12s | %-12s | %-20s | %-15s | %-6s |\n",
+                    acc.getId(),
+                    acc.getFirstName(),
+                    acc.getLastName(),
+                    acc.getAddress(),
+                    acc.getContactNo(),
+                    acc.isAdmin() ? "Yes" : "No");
+        }
+        System.out.println("══════════════════════════════════════════════════════");
+        waitForEnter(sc);
+        accountMenu();
     }
     
-    public void addAccount() throws SQLException{
-       
-            System.out.println("\n\n");
-            System.out.println("\t\t\t\t╔════════════════════════╗");
-            System.out.println("\t\t\t\t║          🔐 CREATE YOUR NEW ACCOUNT     ║");
-            System.out.println("\t\t\t\t╚════════════════════════╝");
-            System.out.print("\t\t\t\tEnter first name: ");
-            accModel.setFirstName(sc.nextLine());
-            System.out.print("\t\t\t\tEnter last name: ");
-            accModel.setLastName(sc.nextLine());
-            System.out.print("\t\t\t\tEnter address: ");
-            accModel.setAddress(sc.nextLine());
-            System.out.print("\t\t\t\tEnter contact number: ");
-            accModel.setContactNo(sc.nextLine());
-            
-            System.out.print("\t\t\t\tUser Type:"
-                    + "\n\t\t\t\t\t[0]Student\n\t\t\t\t\t[1]Libraian"
-                    + "\n\t\t\t\tEnter user type: ");
-            int userType = sc.nextInt();
-            accModel.setIsAdmin(userType == 1);
-            sc.nextLine();
-            
-            String username;
-             while (true)    {
-                 System.out.print("\t\t\t\tEnter username: ");
-                 username = sc.nextLine();
-                if (accountService.isUsernameTaken(username)) {
-                    System.out.println("\n\n\t\t\t\tSorry, username is already taken.");
-                    System.out.println("\t\t\t\tPlease enter a new username: ");
-                } else{
-                     break;
-                 }
-                 }   
-                 accModel.setUserName(username);
-                System.out.print("\t\t\t\tEnter password: ");
-                accModel.setPass(sc.nextLine());
-                
-                if (accModel.getFirstName().isEmpty() || accModel.getLastName().isEmpty() || accModel.getUserName().isEmpty() || accModel.getPass().isEmpty())  {
-                    String errorMsg = "\t\t\t\tFields cannot be empty. Please try again!";
-                    System.out.println(RED + errorMsg + RESET);
-                    addAccount();
-                } else {
-                   accountService.addAccount(accModel);
-                   System.out.println(GREEN+"\n\t\t\t\tWelcome " + accModel.getFirstName() + "! You successfully created your account."+RESET);
-                   waitForEnter(sc);
-                   main.welcomeMessage();
-                }
+    public void addAccount() throws SQLException {
+        System.out.println("\n\n");
+        System.out.println("\t\t\t\t╔════════════════════════╗");
+        System.out.println("\t\t\t\t║          🔐 CREATE YOUR NEW ACCOUNT     ║");
+        System.out.println("\t\t\t\t╚════════════════════════╝");
+        System.out.print("\t\t\t\tEnter first name: ");
+        accModel.setFirstName(sc.nextLine());
+        System.out.print("\t\t\t\tEnter last name: ");
+        accModel.setLastName(sc.nextLine());
+        System.out.print("\t\t\t\tEnter address: ");
+        accModel.setAddress(sc.nextLine());
+        System.out.print("\t\t\t\tEnter contact number: ");
+        accModel.setContactNo(sc.nextLine());
+
+        System.out.print("\t\t\t\tUser Type:"
+                + "\n\t\t\t\t\t[0]Student\n\t\t\t\t\t[1]Libraian"
+                + "\n\t\t\t\tEnter user type: ");
+        int userType = sc.nextInt();
+        accModel.setIsAdmin(userType == 1);
+        sc.nextLine();
+
+        String username;
+         while (true)    {
+             System.out.print("\t\t\t\tEnter username: ");
+             username = sc.nextLine();
+            if (accountService.isUsernameTaken(username)) {
+                System.out.println("\n\n\t\t\t\tSorry, username is already taken.");
+                System.out.println("\t\t\t\tPlease enter a new username: ");
+            } else{
+                 break;
+             }
+         }
+         accModel.setUserName(username);
+         System.out.print("\t\t\t\tEnter password: ");
+         accModel.setPass(sc.nextLine());
+         if (accModel.getFirstName().isEmpty() || accModel.getLastName().isEmpty() || accModel.getUserName().isEmpty() || accModel.getPass().isEmpty())  {
+             String errorMsg = "\t\t\t\tFields cannot be empty. Please try again!";
+             System.out.println(RED + errorMsg + RESET);
+             addAccount();
+         } else {
+             accountService.addAccount(accModel);
+             System.out.println(GREEN+"\n\t\t\t\tWelcome " + accModel.getFirstName() + "! You successfully created your account."+RESET);
+             waitForEnter(sc);
+             main.welcomeMessage();
+         }
     }
     
     public void searchAccount() throws SQLException{
-        
         System.out.println("\n\n");
         System.out.print("\t\t\t\tEnter first name you want to search: ");
         String searchName = sc.nextLine().toLowerCase();
@@ -168,10 +164,9 @@ public class AccountView extends DbConnection {
         "ID", "First Name", "Last Name", "Address", "Contact No", "Admin");
         System.out.println("══════════════════════════════════════════════════════");
         
-            List<AccountModel> search = accountService.getByFirstName(searchName);
-        
-            if (search != null && !search.isEmpty()) {
-                for (AccountModel acc : search) {
+        List<AccountModel> search = accountService.getByFirstName(searchName);
+        if (search != null && !search.isEmpty()) {
+            for (AccountModel acc : search) {
                 System.out.printf("| %-5d | %-12s | %-12s | %-20s | %-15s | %-6s |\n",
                         acc.getId(),
                         acc.getFirstName(),
@@ -179,26 +174,21 @@ public class AccountView extends DbConnection {
                         acc.getAddress(),
                         acc.getContactNo(),
                         acc.isAdmin() ? "Yes" : "No");
-        System.out.println("══════════════════════════════════════════════════════");
-
+                System.out.println("══════════════════════════════════════════════════════");
             }
-                waitForEnter(sc);
-                accountMenu();
-                
-            } else {
-                System.out.println(RED + "\t\t\t\t⚠ No User Found! Please try again." + RESET);
-                waitForEnter(sc);
-                searchAccount();
-            }
+            waitForEnter(sc);
+            accountMenu();
+        } else {
+            System.out.println(RED + "\t\t\t\t⚠ No User Found! Please try again." + RESET);
+            waitForEnter(sc);
+            searchAccount();
+        }
     }
     
     public void updateAccount() throws SQLException {
-        //list account
-        System.out.println("\n\n");
-        System.out.print("\t\t\t\tEnter ID you want to update: ");
+        System.out.print("\n\n\t\t\t\tEnter ID you want to update: ");
         int id = sc.nextInt();
         sc.nextLine();
-        
         
         System.out.println("\t\t\t\t╔═══════════════════════════╗");
         System.out.println("\t\t\t\t║       👥 CHOOSE FIELD YOU WANT TO UPDATE   ║");
@@ -274,7 +264,7 @@ public class AccountView extends DbConnection {
                         System.out.println("\t\t\t\tPlease enter a new username: "); 
                     } else{
                         break;
-                    }
+                    } 
                 }
                 break;
             case 7:
@@ -304,24 +294,21 @@ public class AccountView extends DbConnection {
         System.out.print("\t\t\t\tEnter User ID you want to delete: ");
         int id = sc.nextInt();
         sc.nextLine();
-        
-            System.out.println("\t\t\t\tAre you sure you want to delete User ID " + id + "?");
-            System.out.println("\t\t\t\t[Y] Yes\n\t\t\t\t[N] No");
-            System.out.print("\t\t\t\tEnter choice: ");
-            String choice = sc.nextLine();
-            if ("Y".equalsIgnoreCase(choice)) {
-                accountService.deleteAccount(id);
-                System.out.println("\t\t\t\t✔ User ID " + id + " is successfully deleted!");
-                
-            } else {
-                System.out.println(RED+"\t\t\t\t❌ Delete canceled."+RESET);
-            }
+        System.out.println("\t\t\t\tAre you sure you want to delete User ID " + id + "?");
+        System.out.println("\t\t\t\t[Y] Yes\n\t\t\t\t[N] No");
+        System.out.print("\t\t\t\tEnter choice: ");
+        String choice = sc.nextLine();
+        if ("Y".equalsIgnoreCase(choice)) {
+            accountService.deleteAccount(id);
+            System.out.println("\t\t\t\t✔ User ID " + id + " is successfully deleted!");
+        } else {
+            System.out.println(RED+"\t\t\t\t❌ Delete canceled."+RESET);
+        }
         waitForEnter(sc);
         accountMenu();
     }
     
     public boolean loginAccount() throws SQLException {
-        
         while (true){
             System.out.print("\n\t\t\t\t👤 Username: ");
             String userName = sc.nextLine();
@@ -346,7 +333,7 @@ public class AccountView extends DbConnection {
         } 
     }
     
-    public void logInHeader(){
+    public void loginHeader(){
         System.out.println("\n\n");
         String login = "\t\t\t\t╔═════════════════════════════╗\n" +
                        "\t\t\t\t║\tSchool Library Management System\t  ║\n" +

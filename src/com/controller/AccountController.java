@@ -14,12 +14,10 @@ public class AccountController {
         this.accountService = new AccountService();
     }
     
-     // Read
     public List<AccountModel> showAllAccount() {
         return accountService.getAllAccounts();
     }
     
-    // Create
     public void addAccount(AccountModel item) throws SQLException {
         accountService.addAccount(item);
     }

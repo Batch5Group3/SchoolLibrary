@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-
 public abstract class DbConnection {
     
     private final static String URL = "jdbc:mysql://localhost:3306/dbschoollib_ms";
